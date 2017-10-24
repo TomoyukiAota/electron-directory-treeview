@@ -6,11 +6,14 @@
   </head>
   <body>
     <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-
+    <p>
+      We are using...
+      <ul>
+        <li>Node.js: <span id="node-version"></span></li>
+        <li>Chromium: <span id="chromium-version"></span></li>
+        <li>Electron: <span id="electron-version"></span></li>
+      </ul>
+    </p>
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')
