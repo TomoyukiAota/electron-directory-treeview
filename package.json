@@ -1,21 +1,14 @@
 {
-  "name": "electron-quick-start",
+  "name": "electron-directory-treeview",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "Experiment with electron about a tree view of directories.",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "repository": "https://github.com/TomoyukiAota/electron-directory-treeview",
+  "author": "TomoyukiAota",
+  "license": "MIT",
   "devDependencies": {
     "electron": "~1.7.8"
   }
