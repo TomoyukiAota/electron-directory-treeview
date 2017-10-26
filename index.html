@@ -14,8 +14,13 @@
         <li>Electron: <span id="electron-version"></span></li>
       </ul>
     </p>
-    <input type="button" value="Select Directory" id="select-directory-button">
-    <div id="selected-directory-area">No directory is selected yet.</div>
+    <p>
+      <input type="button" value="Select Directory" id="select-directory-button">
+      <span id="selected-directory-area">No directory is selected yet.</span>  
+    </p>
+    <p>
+      <div id="directory-list-area">Here, the directory list will appear when you select a directory.</div>
+    </p>
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')
