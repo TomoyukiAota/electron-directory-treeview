@@ -25,6 +25,9 @@ ipc.on('selected-directory', function (event, selectedPathArray) {
 function renderDirectoryTreeArea(selectedPath) {
   const tree = dirTree(selectedPath);
   //JSON.stringify(tree,undefined,1);
+  const description = '<p><b>JSON object by directory-tree module</b></p>';
+  const stringifiedObject = JSON.stringify(tree, null, 1);
+  $('#directory-tree-area').html(`${description}<pre>${stringifiedObject}</pre>`)
   console.log(tree);
 }
 
