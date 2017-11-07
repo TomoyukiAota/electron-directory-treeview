@@ -42,3 +42,16 @@ function renderDirectoryListArea(selectedPath) {
         $('#directory-list-area').html(`${description}${fileListAreaHtml}${subDirListAreaHtml}`);
     });
 }
+
+$(document).ready(function(){
+  $('#dragbar').mousedown(function(e){
+    e.preventDefault();
+    $(document).mousemove(function(e){
+      $('.content').css("width",$(document).width()-e.pageX+2);
+      $('.menu').css("width",e.pageX+2);
+    })
+  });
+  $(document).mouseup(function(e){
+    $(document).unbind('mousemove');
+  });
+});
