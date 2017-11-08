@@ -8,6 +8,7 @@ const dir = require('node-dir');
 const dirTree = require('directory-tree');
 
 require('./tree-view.js');
+require('./splitter.js');
 
 $('#node-version').text(process.versions.node);
 $('#chromium-version').text(process.versions.chrome);
@@ -44,16 +45,3 @@ function renderDirectoryListArea(selectedPath) {
         $('#directory-list-area').html(`${description}${fileListAreaHtml}${subDirListAreaHtml}`);
     });
 }
-
-$(document).ready(function(){
-  $('#dragbar').mousedown(function(e){
-    e.preventDefault();
-    $(document).mousemove(function(e){
-      $('.content').css("width",$(document).width()-e.pageX+2);
-      $('.side-bar').css("width",e.pageX+2);
-    })
-  });
-  $(document).mouseup(function(e){
-    $(document).unbind('mousemove');
-  });
-});

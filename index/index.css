@@ -15,7 +15,7 @@ body {
   overflow: scroll;
 }
 
-#dragbar{
+#splitter{
   background-color: black;
   top: 0;
   float: left;
