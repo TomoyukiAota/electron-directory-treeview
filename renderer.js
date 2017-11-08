@@ -7,6 +7,8 @@ const ipc = require('electron').ipcRenderer;
 const dir = require('node-dir');
 const dirTree = require('directory-tree');
 
+require('./tree-view.js');
+
 $('#node-version').text(process.versions.node);
 $('#chromium-version').text(process.versions.chrome);
 $('#electron-version').text(process.versions.electron);
@@ -48,7 +50,7 @@ $(document).ready(function(){
     e.preventDefault();
     $(document).mousemove(function(e){
       $('.content').css("width",$(document).width()-e.pageX+2);
-      $('.menu').css("width",e.pageX+2);
+      $('.side-bar').css("width",e.pageX+2);
     })
   });
   $(document).mouseup(function(e){

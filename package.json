@@ -15,6 +15,7 @@
   "dependencies": {
     "directory-tree": "2.0.0",
     "jquery": "3.2.1",
+    "jstree": "3.3.4",
     "node-dir": "0.1.17"
   }
 }

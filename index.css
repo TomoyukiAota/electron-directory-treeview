@@ -10,7 +10,7 @@ body {
   height: 100%;
 }
 
-.menu {
+.side-bar {
   min-width: 20rem;
   overflow: scroll;
 }
