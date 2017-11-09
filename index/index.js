@@ -7,7 +7,7 @@ const ipc = require('electron').ipcRenderer;
 const dir = require('node-dir');
 const dirTree = require('directory-tree');
 
-require('./tree-view.js');
+const treeView = require('./tree-view.js');
 require('./splitter.js');
 
 $('#node-version').text(process.versions.node);
@@ -23,6 +23,7 @@ ipc.on('selected-directory', function (event, selectedPathArray) {
   $('#selected-directory-area').text(`You selected: ${selectedPath}`);
   renderDirectoryTreeArea(selectedPath);
   renderDirectoryListArea(selectedPath);
+  treeView.render(selectedPath);
 });
 
 function renderDirectoryTreeArea(selectedPath) {
