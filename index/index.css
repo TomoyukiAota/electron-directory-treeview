@@ -10,7 +10,7 @@ body {
   height: 100%;
 }
 
-.side-bar {
+#side-bar {
   min-width: 20rem;
   overflow: scroll;
 }
@@ -24,7 +24,7 @@ body {
   cursor: col-resize;
 }
 
-.content {
+#content {
   padding: 1rem;
   width: 100%;
   overflow: scroll;
