@@ -31,7 +31,6 @@ function renderDirectoryTreeArea(selectedPath) {
   const description = '<p><b>JSON object by directory-tree module</b></p>';
   const stringifiedObject = JSON.stringify(tree, null, 1);
   $('#directory-tree-area').html(`${description}<pre>${stringifiedObject}</pre>`)
-  console.log(tree);
 }
 
 function renderDirectoryListArea(selectedPath) {
