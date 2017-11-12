@@ -10,20 +10,25 @@ function initialize() {
   treeView
     .on('changed.jstree', function (e, data) {
       exports.onChanged(data);
-    })  
+    })
     .jstree({
       'core' : {
         'data' : [
           { "text" : "Root node", 
             "children" : [
               { "text" : "Child node 1" },
-              { "text" : "Child node 2" }
+              { "text" : "Child node 2",
+                "state": {
+                  "disabled"  : true
+                },
+              }
             ]
           }
         ]
       },
       "checkbox" : {
-        "keep_selected_style" : false
+        "keep_selected_style" : false,
+        "cascade_to_disabled" : false
       },
       "plugins" : [ "checkbox" ]
     });
