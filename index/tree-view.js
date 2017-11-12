@@ -2,27 +2,37 @@ const $ = require('jquery');
 require('jstree');
 const dirTree = require('directory-tree');
 
+const treeView = $('#tree-view');
+
 initialize();
 
 function initialize() {
-  $('#tree-view').jstree({
-    'core' : {
-      'data' : [
-        { "text" : "Root node", 
-          "children" : [
-            { "text" : "Child node 1" },
-            { "text" : "Child node 2" }
-          ]
-        }
-      ]
-    }
-  });
+  treeView
+    .on('changed.jstree', function (e, data) {
+      exports.onChanged(data);
+    })  
+    .jstree({
+      'core' : {
+        'data' : [
+          { "text" : "Root node", 
+            "children" : [
+              { "text" : "Child node 1" },
+              { "text" : "Child node 2" }
+            ]
+          }
+        ]
+      },
+      "checkbox" : {
+        "keep_selected_style" : false
+      },
+      "plugins" : [ "checkbox" ]
+    });
 }
 
-function render(selectedPath) {
+exports.render = function (selectedPath) {
   const dataForJstree = getDataForJstree(selectedPath);
-  $('#tree-view').jstree(true).settings.core.data = dataForJstree;
-  $('#tree-view').jstree(true).refresh();
+  treeView.jstree(true).settings.core.data = dataForJstree;
+  treeView.jstree(true).refresh();
 }
 
 function getDataForJstree(selectedPath) {
@@ -48,6 +58,17 @@ function processDirTreeElementArray(dirTreeElementArray) {
   return jstreeElementArray;
 }
 
-module.exports = {
-  render: render
+/**
+ * Event to be fired when tree view is changed.
+ * @param {*} data data property of jstree
+ */
+exports.onChanged = function(data){}; //Default event handler is assigned to avoid being undefined.
+
+exports.getSelectedNodes = function(data) {
+  var i, length, selectedNodes = [];
+  for (i = 0, length = data.selected.length; i < length; i++) {
+    const selectedNode = data.instance.get_node(data.selected[i]);
+    selectedNodes.push(selectedNode);
+  }
+  return selectedNodes;
 }

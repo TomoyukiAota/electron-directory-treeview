@@ -41,3 +41,12 @@ function renderDirectoryListArea(selectedPath) {
         $('#directory-list-area').html(`${description}${fileListAreaHtml}${subDirListAreaHtml}`);
     });
 }
+
+treeView.onChanged = function(data) {
+  const selectedNodes = treeView.getSelectedNodes(data);
+  const title = '<b>Checked Items</b><br>'
+  const itemDescription = (selectedNodes.length === 0)
+    ? "No items are selected."
+    : selectedNodes.map(node => node.text + '<br>').join('');
+  $("#checked-items").html(`${title}${itemDescription}`);
+}
