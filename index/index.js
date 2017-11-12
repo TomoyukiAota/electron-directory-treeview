@@ -10,10 +10,6 @@ const dirTree = require('directory-tree');
 const treeView = require('./tree-view.js');
 require('./splitter.js');
 
-$('#node-version').text(process.versions.node);
-$('#chromium-version').text(process.versions.chrome);
-$('#electron-version').text(process.versions.electron);
-
 $('#select-directory-button').on('click', function (event) {
   ipc.send('open-file-dialog');
 });
