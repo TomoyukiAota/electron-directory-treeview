@@ -47,6 +47,8 @@ function initialize() {
 exports.render = function (selectedPath) {
   const dataForJstree = getDataForJstree(selectedPath);
   treeView.jstree(true).settings.core.data = dataForJstree;
+  treeView.jstree(true).deselect_all(true);
+  treeView.jstree(true).close_all();
   treeView.jstree(true).refresh();
 }
 
