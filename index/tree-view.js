@@ -9,28 +9,35 @@ initialize();
 function initialize() {
   treeView
     .on('changed.jstree', function (e, data) {
+      cascadeDownSelectedState(data);
       exports.onChanged(data);
     })
     .jstree({
       'core' : {
         'data' : [
           { "text" : "Root node", 
-            "children" : [
+            "children" : 
+            [
               { "text" : "Child node 1" },
               { "text" : "Child node 2",
-                "state": {
-                  "disabled"  : true
-                },
+                "children" : 
+                [
+                  { "text" : "Child node 2-1" }
+                ] 
+              },
+              { "text" : "Child node 3",
+                "state": { "disabled"  : true },
+                "children" : 
+                [
+                  { "text" : "Child node 3-1",
+                    "state": { "disabled"  : true }
+                  }
+                ] 
               }
             ]
           }
         ]
       },
-      "checkbox" : {
-        "keep_selected_style" : false,
-        "cascade_to_disabled" : false
-      },
-      "plugins" : [ "checkbox" ]
     });
 }
 
@@ -76,4 +83,19 @@ exports.getSelectedNodes = function(data) {
     selectedNodes.push(selectedNode);
   }
   return selectedNodes;
+}
+
+function cascadeDownSelectedState(data) {
+  const selectedNodes = exports.getSelectedNodes(data);
+  selectedNodes.forEach(node => selectChildrenRecursively(node));
+}
+
+function selectChildrenRecursively(parentNode) {
+  parentNode.children
+    .map(id => treeView.jstree(true).get_node(id))
+    .filter(node => !node.state.disabled)
+    .forEach(node => {
+      treeView.jstree(true).select_node(node.id, "true", "true");
+      selectChildrenRecursively(node);
+    });
 }

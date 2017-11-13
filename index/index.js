@@ -44,9 +44,9 @@ function renderDirectoryListArea(selectedPath) {
 
 treeView.onChanged = function(data) {
   const selectedNodes = treeView.getSelectedNodes(data);
-  const title = '<b>Checked Items</b><br>'
+  const title = '<b>Selected Items</b><br>'
   const itemDescription = (selectedNodes.length === 0)
     ? "No items are selected."
     : selectedNodes.map(node => node.text + '<br>').join('');
-  $("#checked-items").html(`${title}${itemDescription}`);
+  $("#selected-items").html(`${title}${itemDescription}`);
 }
