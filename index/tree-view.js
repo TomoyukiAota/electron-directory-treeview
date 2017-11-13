@@ -12,9 +12,12 @@ function initialize() {
       cascadeDownSelectedState(data);
       exports.onChanged(data);
     })
-    .jstree({
-      'core' : {
-        'data' : [
+    .jstree(
+    {
+      'core' : 
+      {
+        'data' : 
+        [
           { "text" : "Root node", 
             "children" : 
             [
@@ -26,11 +29,11 @@ function initialize() {
                 ] 
               },
               { "text" : "Child node 3",
-                "state": { "disabled"  : true },
+                "state": { "disabled" : true },
                 "children" : 
                 [
                   { "text" : "Child node 3-1",
-                    "state": { "disabled"  : true }
+                    "state": { "disabled" : true }
                   }
                 ] 
               }
