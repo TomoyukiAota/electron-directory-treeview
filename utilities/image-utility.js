@@ -1,0 +1,1 @@
+exports.supportedFilenameExtensions = ['.jpeg', '.jpg', '.jpe', '.jfif', '.jfi', '.jif']; //JPEG extenions

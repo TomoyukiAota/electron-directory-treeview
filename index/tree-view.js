@@ -2,6 +2,8 @@ const $ = require('jquery');
 require('jstree');
 const dirTree = require('directory-tree');
 
+const imageUtil = require('../utilities/image-utility');
+
 const treeView = $('#tree-view');
 
 initialize();
@@ -64,15 +66,26 @@ function processDirTreeElementArray(dirTreeElementArray) {
   var jstreeElementArray = [];
   dirTreeElementArray.forEach(
     (dirTreeElement) => {
-      var jstreeElement = {};
-      jstreeElement.text = dirTreeElement.name;
+      var jstreeElement = {
+        text: dirTreeElement.name,
+        state: { disabled: isDisabled(dirTreeElement) }
+      };
       if(dirTreeElement.hasOwnProperty("children")) {
         jstreeElement.children = processDirTreeElementArray(dirTreeElement.children);
+        const isAllChildrenDisabled = jstreeElement.children.every(child => child.state.disabled);
+        jstreeElement.state.disabled = isAllChildrenDisabled;
       }
       jstreeElementArray.push(jstreeElement);
     }
   );
   return jstreeElementArray;
+}
+
+function isDisabled(dirTreeElement) {
+  const isFile = () => dirTreeElement.type === "file";
+  const isFilenameExtensionSupported = () => 
+    imageUtil.supportedFilenameExtensions.includes(dirTreeElement.extension);
+  return isFile() && !isFilenameExtensionSupported();
 }
 
 /**
