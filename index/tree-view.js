@@ -3,8 +3,8 @@ require('jstree');
 const dirTree = require('directory-tree');
 
 const imageUtil = require('../utilities/image-utility');
-const pathIdPair = require('../utilities/path-id-pairs/path-id-pairs.js');
-const pathIdPairUtil = require('../utilities/path-id-pairs/path-id-pairs-utility.js');
+const pathIdPair = require('../utilities/path-id-pairs/path-id-pairs');
+const pathIdPairUtil = require('../utilities/path-id-pairs/path-id-pairs-utility-for-tree-view');
 
 const treeView = $('#tree-view');
 
