@@ -2,12 +2,14 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const $ = require('jquery');
+const fs = require('fs');
 const ipc = require('electron').ipcRenderer;
+const $ = require('jquery');
 const dir = require('node-dir');
 const dirTree = require('directory-tree');
 
 const treeView = require('./tree-view.js');
+const pathIdPairUtil = require('../utilities/path-id-pairs/path-id-pairs-utility-for-tree-view');
 require('./splitter.js');
 
 $('#select-directory-button').on('click', function (event) {
@@ -43,10 +45,25 @@ function renderDirectoryListArea(selectedPath) {
 }
 
 treeView.onChanged = function(data) {
+  function getHtmlForSelectedNode(node) {
+    function getImgElementOrMessage(path) {
+      if (!fs.existsSync(path))
+        return "File/Directory not found.";
+      
+      return fs.statSync(path).isFile()
+        ? `<img src='${path}' width='160' height='160' ><br>`
+        : "";
+    }
+
+    const fileName = node.text;
+    const path = pathIdPairUtil.getPath(node.id);
+    return fileName + '<br>' + getImgElementOrMessage(path) + '<br>';
+  }
+
   const selectedNodes = treeView.getSelectedNodes(data);
   const title = '<b>Selected Items</b><br>'
   const itemDescription = (selectedNodes.length === 0)
     ? "No items are selected."
-    : selectedNodes.map(node => node.text + '<br>').join('');
+    : selectedNodes.map(node => getHtmlForSelectedNode(node)).join('');
   $("#selected-items").html(`${title}${itemDescription}`);
 }

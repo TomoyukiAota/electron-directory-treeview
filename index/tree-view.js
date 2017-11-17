@@ -88,7 +88,7 @@ function processDirTreeElementArray(dirTreeElementArray) {
 function isDisabled(dirTreeElement) {
   const isFile = () => dirTreeElement.type === "file";
   const isFilenameExtensionSupported = () => 
-    imageUtil.supportedFilenameExtensions.includes(dirTreeElement.extension);
+    imageUtil.isSupportedFilenameExtension(dirTreeElement.extension);
   return isFile() && !isFilenameExtensionSupported();
 }
 
