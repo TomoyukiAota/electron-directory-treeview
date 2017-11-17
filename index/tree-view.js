@@ -1,6 +1,6 @@
 const $ = require('jquery');
 require('jstree');
-const dirTree = require('directory-tree');
+const directoryTree = require('directory-tree');
 
 const imageUtil = require('../utilities/image-utility');
 const pathIdPair = require('../utilities/path-id-pairs/path-id-pairs');
@@ -58,7 +58,7 @@ exports.render = function (selectedPath) {
 }
 
 function getDataForJstree(selectedPath) {
-  var dirTreeRoot = dirTree(selectedPath);
+  var dirTreeRoot = directoryTree(selectedPath);
   if(!Array.isArray(dirTreeRoot)){
     dirTreeRoot = [dirTreeRoot];
   }
