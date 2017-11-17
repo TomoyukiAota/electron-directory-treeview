@@ -8,7 +8,7 @@ const $ = require('jquery');
 const directoryTree = require('directory-tree');
 
 const treeView = require('./tree-view.js');
-const pathIdPairUtil = require('../utilities/path-id-pairs/path-id-pairs-utility-for-tree-view');
+const pathIdPairsHandlerForTreeView = require('../utilities/path-id-pairs/path-id-pairs-handler-for-tree-view');
 require('./splitter.js');
 
 $('#select-directory-button').on('click', function (event) {
@@ -41,7 +41,7 @@ treeView.onChanged = function(data) {
     }
 
     const fileName = node.text;
-    const path = pathIdPairUtil.getPath(node.id);
+    const path = pathIdPairsHandlerForTreeView.getPath(node.id);
     return fileName + '<br>' + getImgElementOrMessage(path) + '<br>';
   }
 

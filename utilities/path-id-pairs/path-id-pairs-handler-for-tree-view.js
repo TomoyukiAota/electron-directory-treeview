@@ -3,7 +3,7 @@ const pathIdPairs = require('./path-id-pairs');
 const idPrefix = "tv-";
 
 /**
- * Register the specified path and get issued ID.
+ * Register the specified path and get issued ID for tree view.
  * @param {string} path path
  */
 exports.issueIdForTreeView = function(path) {

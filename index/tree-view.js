@@ -3,8 +3,8 @@ require('jstree');
 const directoryTree = require('directory-tree');
 
 const imageUtil = require('../utilities/image-utility');
-const pathIdPair = require('../utilities/path-id-pairs/path-id-pairs');
-const pathIdPairUtil = require('../utilities/path-id-pairs/path-id-pairs-utility-for-tree-view');
+const pathIdPairs = require('../utilities/path-id-pairs/path-id-pairs');
+const pathIdPairsHandlerForTreeView = require('../utilities/path-id-pairs/path-id-pairs-handler-for-tree-view');
 
 const treeView = $('#tree-view');
 
@@ -49,7 +49,7 @@ function initialize() {
 }
 
 exports.render = function (selectedPath) {
-  pathIdPair.reset();
+  pathIdPairs.reset();
   const dataForJstree = getDataForJstree(selectedPath);
   treeView.jstree(true).settings.core.data = dataForJstree;
   treeView.jstree(true).deselect_all(true);
@@ -70,7 +70,7 @@ function processDirTreeElementArray(dirTreeElementArray) {
   dirTreeElementArray.forEach(
     (dirTreeElement) => {
       var jstreeElement = {
-        id: pathIdPairUtil.issueIdForTreeView(dirTreeElement.path),
+        id: pathIdPairsHandlerForTreeView.issueIdForTreeView(dirTreeElement.path),
         text: dirTreeElement.name,
         state: { disabled: isDisabled(dirTreeElement) }
       };
