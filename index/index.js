@@ -8,7 +8,7 @@ const $ = require('jquery');
 const directoryTree = require('directory-tree');
 
 const treeView = require('./tree-view.js');
-const pathIdPairsHandlerForTreeView = require('../utilities/path-id-pairs/path-id-pairs-handler-for-tree-view');
+const pathIdPairsHandlerForTreeView = require('../model/path-id-pairs/path-id-pairs-handler-for-tree-view');
 require('./splitter.js');
 
 $('#select-directory-button').on('click', function (event) {

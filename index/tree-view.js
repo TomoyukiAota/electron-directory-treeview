@@ -2,9 +2,9 @@ const $ = require('jquery');
 require('jstree');
 const directoryTree = require('directory-tree');
 
-const imageUtil = require('../utilities/image-utility');
-const pathIdPairs = require('../utilities/path-id-pairs/path-id-pairs');
-const pathIdPairsHandlerForTreeView = require('../utilities/path-id-pairs/path-id-pairs-handler-for-tree-view');
+const imageUtil = require('../model/image-utility');
+const pathIdPairs = require('../model/path-id-pairs/path-id-pairs');
+const pathIdPairsHandlerForTreeView = require('../model/path-id-pairs/path-id-pairs-handler-for-tree-view');
 
 const treeView = $('#tree-view');
 
