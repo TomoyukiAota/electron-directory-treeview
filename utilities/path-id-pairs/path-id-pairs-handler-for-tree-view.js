@@ -3,15 +3,6 @@ const pathIdPairs = require('./path-id-pairs');
 const idPrefix = "tv-";
 
 /**
- * Register the specified path and get issued ID for tree view.
- * @param {string} path path
- */
-exports.issueIdForTreeView = function(path) {
-  pathIdPairs.registerPath(path);
-  return exports.getIdForTreeView(path);
-}
-
-/**
  * Get the ID for tree view from the specified path.
  * @param {string} path path
  * @return {string} If the path is registered, returns the ID. If not, returns null.

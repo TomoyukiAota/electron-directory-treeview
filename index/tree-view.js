@@ -50,12 +50,28 @@ function initialize() {
 
 exports.update = function (selectedPath) {
   const directoryTreeRoot = directoryTree(selectedPath);
-  pathIdPairs.reset();
+  updatePathIdPairs(directoryTreeRoot);
   const dataForJsTree = generateDataForJsTree(directoryTreeRoot);
   treeView.jstree(true).settings.core.data = dataForJsTree;
   treeView.jstree(true).deselect_all(true);
   treeView.jstree(true).close_all();
   treeView.jstree(true).refresh();
+}
+
+function updatePathIdPairs(directoryTreeRoot) {
+  pathIdPairs.reset();
+  return updatePathIdPairsRecursively([directoryTreeRoot]);
+}
+
+function updatePathIdPairsRecursively(directoryTreeElementArray) {
+  directoryTreeElementArray.forEach(
+    (directoryTreeElement) => {
+      pathIdPairs.registerPath(directoryTreeElement.path);
+      if(directoryTreeElement.hasOwnProperty("children")) {
+        updatePathIdPairsRecursively(directoryTreeElement.children);
+      }
+    }
+  )
 }
 
 function generateDataForJsTree(directoryTreeRoot) {
@@ -67,7 +83,7 @@ function generateDataForJsTreeRecursively(directoryTreeElementArray) {
   directoryTreeElementArray.forEach(
     (directoryTreeElement) => {
       var jstreeElement = {
-        id: pathIdPairsHandlerForTreeView.issueIdForTreeView(directoryTreeElement.path),
+        id: pathIdPairsHandlerForTreeView.getIdForTreeView(directoryTreeElement.path),
         text: directoryTreeElement.name,
         state: { disabled: isDisabled(directoryTreeElement) }
       };
