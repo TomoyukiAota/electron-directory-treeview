@@ -19,7 +19,7 @@ ipc.on('selected-directory', function (event, selectedPathArray) {
   const selectedPath = selectedPathArray[0];
   $('#selected-directory-area').text(`You selected: ${selectedPath}`);
   renderDirectoryTreeArea(selectedPath);
-  treeView.render(selectedPath);
+  treeView.update(selectedPath);
 });
 
 function renderDirectoryTreeArea(selectedPath) {

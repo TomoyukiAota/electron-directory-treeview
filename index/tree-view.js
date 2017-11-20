@@ -48,17 +48,17 @@ function initialize() {
     });
 }
 
-exports.render = function (selectedPath) {
+exports.update = function (selectedPath) {
+  const dirTreeRoot = directoryTree(selectedPath);  
   pathIdPairs.reset();
-  const dataForJstree = getDataForJstree(selectedPath);
+  const dataForJstree = getDataForJstree(dirTreeRoot);
   treeView.jstree(true).settings.core.data = dataForJstree;
   treeView.jstree(true).deselect_all(true);
   treeView.jstree(true).close_all();
   treeView.jstree(true).refresh();
 }
 
-function getDataForJstree(selectedPath) {
-  var dirTreeRoot = directoryTree(selectedPath);
+function getDataForJstree(dirTreeRoot) {
   if(!Array.isArray(dirTreeRoot)){
     dirTreeRoot = [dirTreeRoot];
   }
