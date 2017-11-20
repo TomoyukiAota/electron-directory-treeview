@@ -1,10 +1,7 @@
 const $ = require('jquery');
 require('jstree');
-const directoryTree = require('directory-tree');
 
-const imageUtil = require('../model/image-utility');
-const pathIdPairs = require('../model/path-id-pairs/path-id-pairs');
-const pathIdPairsHandlerForTreeView = require('../model/path-id-pairs/path-id-pairs-handler-for-tree-view');
+const selectedDirectoryManager = require('../model/selected-directory-manager');
 
 const treeView = $('#tree-view');
 
@@ -49,60 +46,12 @@ function initialize() {
 }
 
 exports.update = function (selectedPath) {
-  const directoryTreeRoot = directoryTree(selectedPath);
-  updatePathIdPairs(directoryTreeRoot);
-  const dataForJsTree = generateDataForJsTree(directoryTreeRoot);
+  selectedDirectoryManager.update(selectedPath);
+  const dataForJsTree = selectedDirectoryManager.generateDataForJsTree();
   treeView.jstree(true).settings.core.data = dataForJsTree;
   treeView.jstree(true).deselect_all(true);
   treeView.jstree(true).close_all();
   treeView.jstree(true).refresh();
-}
-
-function updatePathIdPairs(directoryTreeRoot) {
-  pathIdPairs.reset();
-  return updatePathIdPairsRecursively([directoryTreeRoot]);
-}
-
-function updatePathIdPairsRecursively(directoryTreeElementArray) {
-  directoryTreeElementArray.forEach(
-    (directoryTreeElement) => {
-      pathIdPairs.registerPath(directoryTreeElement.path);
-      if(directoryTreeElement.hasOwnProperty("children")) {
-        updatePathIdPairsRecursively(directoryTreeElement.children);
-      }
-    }
-  )
-}
-
-function generateDataForJsTree(directoryTreeRoot) {
-  return generateDataForJsTreeRecursively([directoryTreeRoot]);
-}
-
-function generateDataForJsTreeRecursively(directoryTreeElementArray) {
-  var jstreeElementArray = [];
-  directoryTreeElementArray.forEach(
-    (directoryTreeElement) => {
-      var jstreeElement = {
-        id: pathIdPairsHandlerForTreeView.getIdForTreeView(directoryTreeElement.path),
-        text: directoryTreeElement.name,
-        state: { disabled: isDisabled(directoryTreeElement) }
-      };
-      if(directoryTreeElement.hasOwnProperty("children")) {
-        jstreeElement.children = generateDataForJsTreeRecursively(directoryTreeElement.children);
-        const isAllChildrenDisabled = jstreeElement.children.every(child => child.state.disabled);
-        jstreeElement.state.disabled = isAllChildrenDisabled;
-      }
-      jstreeElementArray.push(jstreeElement);
-    }
-  );
-  return jstreeElementArray;
-}
-
-function isDisabled(directoryTreeElement) {
-  const isFile = () => directoryTreeElement.type === "file";
-  const isFilenameExtensionSupported = () => 
-    imageUtil.isSupportedFilenameExtension(directoryTreeElement.extension);
-  return isFile() && !isFilenameExtensionSupported();
 }
 
 /**
