@@ -51,14 +51,14 @@ function initialize() {
 exports.update = function (selectedPath) {
   const directoryTreeRoot = directoryTree(selectedPath);  
   pathIdPairs.reset();
-  const dataForJstree = getDataForJstree(directoryTreeRoot);
-  treeView.jstree(true).settings.core.data = dataForJstree;
+  const dataForJsTree = getDataForJsTree(directoryTreeRoot);
+  treeView.jstree(true).settings.core.data = dataForJsTree;
   treeView.jstree(true).deselect_all(true);
   treeView.jstree(true).close_all();
   treeView.jstree(true).refresh();
 }
 
-function getDataForJstree(directoryTreeRoot) {
+function getDataForJsTree(directoryTreeRoot) {
   if(!Array.isArray(directoryTreeRoot)){
     directoryTreeRoot = [directoryTreeRoot];
   }
