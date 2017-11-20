@@ -49,33 +49,33 @@ function initialize() {
 }
 
 exports.update = function (selectedPath) {
-  const dirTreeRoot = directoryTree(selectedPath);  
+  const directoryTreeRoot = directoryTree(selectedPath);  
   pathIdPairs.reset();
-  const dataForJstree = getDataForJstree(dirTreeRoot);
+  const dataForJstree = getDataForJstree(directoryTreeRoot);
   treeView.jstree(true).settings.core.data = dataForJstree;
   treeView.jstree(true).deselect_all(true);
   treeView.jstree(true).close_all();
   treeView.jstree(true).refresh();
 }
 
-function getDataForJstree(dirTreeRoot) {
-  if(!Array.isArray(dirTreeRoot)){
-    dirTreeRoot = [dirTreeRoot];
+function getDataForJstree(directoryTreeRoot) {
+  if(!Array.isArray(directoryTreeRoot)){
+    directoryTreeRoot = [directoryTreeRoot];
   }
-  return processDirTreeElementArray(dirTreeRoot);
+  return processdirectoryTreeElementArray(directoryTreeRoot);
 }
 
-function processDirTreeElementArray(dirTreeElementArray) {
+function processdirectoryTreeElementArray(directoryTreeElementArray) {
   var jstreeElementArray = [];
-  dirTreeElementArray.forEach(
-    (dirTreeElement) => {
+  directoryTreeElementArray.forEach(
+    (directoryTreeElement) => {
       var jstreeElement = {
-        id: pathIdPairsHandlerForTreeView.issueIdForTreeView(dirTreeElement.path),
-        text: dirTreeElement.name,
-        state: { disabled: isDisabled(dirTreeElement) }
+        id: pathIdPairsHandlerForTreeView.issueIdForTreeView(directoryTreeElement.path),
+        text: directoryTreeElement.name,
+        state: { disabled: isDisabled(directoryTreeElement) }
       };
-      if(dirTreeElement.hasOwnProperty("children")) {
-        jstreeElement.children = processDirTreeElementArray(dirTreeElement.children);
+      if(directoryTreeElement.hasOwnProperty("children")) {
+        jstreeElement.children = processdirectoryTreeElementArray(directoryTreeElement.children);
         const isAllChildrenDisabled = jstreeElement.children.every(child => child.state.disabled);
         jstreeElement.state.disabled = isAllChildrenDisabled;
       }
@@ -85,10 +85,10 @@ function processDirTreeElementArray(dirTreeElementArray) {
   return jstreeElementArray;
 }
 
-function isDisabled(dirTreeElement) {
-  const isFile = () => dirTreeElement.type === "file";
+function isDisabled(directoryTreeElement) {
+  const isFile = () => directoryTreeElement.type === "file";
   const isFilenameExtensionSupported = () => 
-    imageUtil.isSupportedFilenameExtension(dirTreeElement.extension);
+    imageUtil.isSupportedFilenameExtension(directoryTreeElement.extension);
   return isFile() && !isFilenameExtensionSupported();
 }
 
