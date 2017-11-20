@@ -49,7 +49,7 @@ function initialize() {
 }
 
 exports.update = function (selectedPath) {
-  const directoryTreeRoot = directoryTree(selectedPath);  
+  const directoryTreeRoot = directoryTree(selectedPath);
   pathIdPairs.reset();
   const dataForJsTree = getDataForJsTree(directoryTreeRoot);
   treeView.jstree(true).settings.core.data = dataForJsTree;
@@ -62,10 +62,10 @@ function getDataForJsTree(directoryTreeRoot) {
   if(!Array.isArray(directoryTreeRoot)){
     directoryTreeRoot = [directoryTreeRoot];
   }
-  return processdirectoryTreeElementArray(directoryTreeRoot);
+  return processDirectoryTreeElementArray(directoryTreeRoot);
 }
 
-function processdirectoryTreeElementArray(directoryTreeElementArray) {
+function processDirectoryTreeElementArray(directoryTreeElementArray) {
   var jstreeElementArray = [];
   directoryTreeElementArray.forEach(
     (directoryTreeElement) => {
@@ -75,7 +75,7 @@ function processdirectoryTreeElementArray(directoryTreeElementArray) {
         state: { disabled: isDisabled(directoryTreeElement) }
       };
       if(directoryTreeElement.hasOwnProperty("children")) {
-        jstreeElement.children = processdirectoryTreeElementArray(directoryTreeElement.children);
+        jstreeElement.children = processDirectoryTreeElementArray(directoryTreeElement.children);
         const isAllChildrenDisabled = jstreeElement.children.every(child => child.state.disabled);
         jstreeElement.state.disabled = isAllChildrenDisabled;
       }
