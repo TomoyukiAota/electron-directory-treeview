@@ -3,6 +3,7 @@ const directoryTree = require('directory-tree');
 const imageUtil = require('./image-utility');
 const pathIdPairs = require('./path-id-pairs/path-id-pairs');
 const pathIdPairsHandlerForTreeView = require('./path-id-pairs/path-id-pairs-handler-for-tree-view');
+const exifManager = require('./exif-manager');
 
 let directoryTreeRoot;
 
@@ -13,6 +14,7 @@ let directoryTreeRoot;
 exports.update = function(selectedPath) {
   directoryTreeRoot = directoryTree(selectedPath);
   updatePathIdPairs();
+  exifManager.update(directoryTreeRoot);
 }
 
 function updatePathIdPairs() {
