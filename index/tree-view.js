@@ -46,12 +46,14 @@ function initialize() {
 }
 
 exports.update = function (selectedPath) {
-  selectedDirectoryManager.update(selectedPath);
-  const dataForJsTree = selectedDirectoryManager.generateDataForJsTree();
-  treeView.jstree(true).settings.core.data = dataForJsTree;
-  treeView.jstree(true).deselect_all(true);
-  treeView.jstree(true).close_all();
-  treeView.jstree(true).refresh();
+  selectedDirectoryManager.update(selectedPath)
+  .then(() => {
+    const dataForJsTree = selectedDirectoryManager.generateDataForJsTree();
+    treeView.jstree(true).settings.core.data = dataForJsTree;
+    treeView.jstree(true).deselect_all(true);
+    treeView.jstree(true).close_all();
+    treeView.jstree(true).refresh();
+  });
 }
 
 /**

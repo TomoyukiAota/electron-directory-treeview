@@ -11,10 +11,10 @@ let directoryTreeRoot;
  * Update selected directory to be managed in selected-directory-manager.
  * @param {string} selectedPath 
  */
-exports.update = function(selectedPath) {
+exports.update = async function(selectedPath) {
   directoryTreeRoot = directoryTree(selectedPath);
   updatePathIdPairs();
-  exifManager.update(directoryTreeRoot);
+  await exifManager.update(directoryTreeRoot);
 }
 
 function updatePathIdPairs() {
