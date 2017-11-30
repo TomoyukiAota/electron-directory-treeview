@@ -3,17 +3,41 @@ const exifParser = require('exif-parser');
 
 const imageUtility = require('./image-utility');
 
-const pathExifPromisePairs = [];
+const exifPromises = [];
 const pathExifPairs = [];
 
 exports.update = async function(directoryTreeRoot) {
   reset();
-  fetchExifRecursively([directoryTreeRoot]);
-  const promises = pathExifPromisePairs.map(
-    pair => pair.exifPromise
+  addExifPromiseRecursively([directoryTreeRoot]);
+  await Promise.all(exifPromises);
+  console.log(pathExifPairs);
+}
+
+function reset() {
+  exifPromises.length = 0;
+  pathExifPairs.length = 0;
+}
+
+function addExifPromiseRecursively(directoryTreeElementArray) {
+  directoryTreeElementArray.forEach(
+    (directoryTreeElement) => {
+      addExifPromise(directoryTreeElement);
+      if(directoryTreeElement.hasOwnProperty("children")) {
+        addExifPromiseRecursively(directoryTreeElement.children);
+      }
+    }
+  )
+}
+
+function addExifPromise(directoryTreeElement) {
+  if(!imageUtility.isSupportedFilenameExtension(directoryTreeElement.extension))
+    return;
+
+  const promise = 
+    instantiatePromiseToFetchExif(directoryTreeElement)
     .then(exif => 
       pathExifPairs.push({
-        path: pair.path,
+        path: directoryTreeElement.path,
         exif: exif
       })
     )
@@ -21,35 +45,8 @@ exports.update = async function(directoryTreeRoot) {
       //Do nothing here. This just converts rejected promise into resolved ones.
       //This is required to wait for all promises including both resolved and rejected ones to be settled.
     })
-  );
-  await Promise.all(promises);
-  console.log(pathExifPairs);
-}
 
-function reset() {
-  pathExifPromisePairs.length = 0;
-  pathExifPairs.length = 0;
-}
-
-function fetchExifRecursively(directoryTreeElementArray) {
-  directoryTreeElementArray.forEach(
-    (directoryTreeElement) => {
-      fetchExif(directoryTreeElement);
-      if(directoryTreeElement.hasOwnProperty("children")) {
-        fetchExifRecursively(directoryTreeElement.children);
-      }
-    }
-  )
-}
-
-function fetchExif(directoryTreeElement) {
-  if(!imageUtility.isSupportedFilenameExtension(directoryTreeElement.extension))
-    return;
-  const pathExifPromisePair = {
-    path: directoryTreeElement.path,
-    exifPromise: instantiatePromiseToFetchExif(directoryTreeElement)
-  }
-  pathExifPromisePairs.push(pathExifPromisePair);
+  exifPromises.push(promise);
 }
 
 function instantiatePromiseToFetchExif(directoryTreeElement) {
