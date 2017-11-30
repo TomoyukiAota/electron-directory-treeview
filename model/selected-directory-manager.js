@@ -62,7 +62,6 @@ function generateDataForJsTreeRecursively(directoryTreeElementArray) {
 
 function isDisabled(directoryTreeElement) {
   const isFile = () => directoryTreeElement.type === "file";
-  const isFilenameExtensionSupported = () => 
-    imageUtil.isSupportedFilenameExtension(directoryTreeElement.extension);
-  return isFile() && !isFilenameExtensionSupported();
+  const gpsCoordinateExists = exifManager.getGpsCoordinates(directoryTreeElement.path) !== null;
+  return isFile() && !gpsCoordinateExists;
 }

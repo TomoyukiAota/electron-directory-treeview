@@ -5,7 +5,12 @@ const imageUtility = require('./image-utility');
 
 const exifPromises = [];
 const pathExifPairs = [];
+const exifFetchError = "Error occured when fetching EXIF."
 
+/**
+ * Update exif-manager using the specified root of directory tree.
+ * @param {*} directoryTreeRoot the root of directory tree
+ */
 exports.update = async function(directoryTreeRoot) {
   reset();
   addExifPromiseRecursively([directoryTreeRoot]);
@@ -13,7 +18,43 @@ exports.update = async function(directoryTreeRoot) {
   console.log(pathExifPairs);
 }
 
-exports.exifFetchError = "Error occured when fetching EXIF."
+/**
+ * Get EXIF for the specified file if exists. If not, returns null.
+ * @param {string} path file path
+ */
+exports.getExif = function(path) {
+  const pair = pathExifPairs.find(pair => pair.path === path);
+  return pair && pair.exif !== exifFetchError
+    ? pair.exif
+    : null;
+}
+
+/**
+ * Get GPS coordinates for the specified file if exists. If not, returns null.
+ * @param {string} path file path
+ */
+exports.getGpsCoordinates = function(path) {
+  const exif = exports.getExif(path);
+  if(exif === null)
+    return null;
+
+  const tags = exif.tags;
+  const gpsCoordinatesExist = tags.hasOwnProperty("GPSLatitude") && tags.hasOwnProperty("GPSLongitude");
+  if(!gpsCoordinatesExist)
+    return null;
+
+  const latitude = tags.GPSLatitudeRef === "S"
+    ? -tags.GPSLatitude
+    :  tags.GPSLatitude;    //For the case of "N" (the most cases), or undefined, or any other value.
+  const longitude = tags.GPSLongitudeRef === "W"
+    ? -tags.GPSLongitude
+    :  tags.GPSLongitude;   //For the case of "E" (the most cases), or undefined, or any other value.
+
+  return {
+    latitude: latitude,
+    longitude: longitude
+  }
+}
 
 function reset() {
   exifPromises.length = 0;
@@ -46,7 +87,7 @@ function addExifPromise(directoryTreeElement) {
     .catch(() => 
       pathExifPairs.push({
         path: directoryTreeElement.path,
-        exif: exports.exifFetchError
+        exif: exifFetchError
       })
     )
 
