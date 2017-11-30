@@ -13,6 +13,8 @@ exports.update = async function(directoryTreeRoot) {
   console.log(pathExifPairs);
 }
 
+exports.exifFetchError = "Error occured when fetching EXIF."
+
 function reset() {
   exifPromises.length = 0;
   pathExifPairs.length = 0;
@@ -41,10 +43,12 @@ function addExifPromise(directoryTreeElement) {
         exif: exif
       })
     )
-    .catch(() => {
-      //Do nothing here. This just converts rejected promise into resolved ones.
-      //This is required to wait for all promises including both resolved and rejected ones to be settled.
-    })
+    .catch(() => 
+      pathExifPairs.push({
+        path: directoryTreeElement.path,
+        exif: exports.exifFetchError
+      })
+    )
 
   exifPromises.push(promise);
 }
