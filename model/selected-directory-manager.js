@@ -1,6 +1,5 @@
 const directoryTree = require('directory-tree');
 
-const imageUtil = require('./image-utility');
 const pathIdPairs = require('./path-id-pairs/path-id-pairs');
 const pathIdPairsHandlerForTreeView = require('./path-id-pairs/path-id-pairs-handler-for-tree-view');
 const exifManager = require('./exif-manager');
