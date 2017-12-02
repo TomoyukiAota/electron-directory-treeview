@@ -3,6 +3,7 @@
 // All of the Node.js APIs are available in this process.
 
 const fs = require('fs');
+const path = require('path'); 
 const ipc = require('electron').ipcRenderer;
 const $ = require('jquery');
 const directoryTree = require('directory-tree');
@@ -17,7 +18,7 @@ $('#select-directory-button').on('click', function (event) {
 
 ipc.on('selected-directory', function (event, selectedPathArray) {
   const selectedPath = selectedPathArray[0];
-  $('#selected-directory-area').text(`You selected: ${selectedPath}`);
+  $('#selected-directory-area').text(`${path.dirname(selectedPath)}`);
   renderDirectoryTreeArea(selectedPath);
   treeView.update(selectedPath);
 });
