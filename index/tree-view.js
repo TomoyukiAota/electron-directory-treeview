@@ -5,7 +5,11 @@ const selectedDirectoryManager = require('../model/selected-directory-manager');
 
 const treeView = $('#tree-view');
 
-initialize();
+/**
+ * Event to be fired when tree view is changed.
+ * @param {*} data data property of jsTree
+ */
+exports.onChanged = function(data){}; //Default event handler is assigned to avoid being undefined.
 
 function initialize() {
   treeView
@@ -22,6 +26,8 @@ function initialize() {
     });
 }
 
+initialize();
+
 exports.update = function (selectedPath) {
   selectedDirectoryManager.update(selectedPath)
   .then(() => {
@@ -32,12 +38,6 @@ exports.update = function (selectedPath) {
     treeView.jstree(true).refresh();
   });
 }
-
-/**
- * Event to be fired when tree view is changed.
- * @param {*} data data property of jstree
- */
-exports.onChanged = function(data){}; //Default event handler is assigned to avoid being undefined.
 
 exports.getSelectedNodes = function(data) {
   var i, length, selectedNodes = [];
