@@ -17,30 +17,7 @@ function initialize() {
     {
       'core' : 
       {
-        'data' : 
-        [
-          { "text" : "Root node", 
-            "children" : 
-            [
-              { "text" : "Child node 1" },
-              { "text" : "Child node 2",
-                "children" : 
-                [
-                  { "text" : "Child node 2-1" }
-                ] 
-              },
-              { "text" : "Child node 3",
-                "state": { "disabled" : true },
-                "children" : 
-                [
-                  { "text" : "Child node 3-1",
-                    "state": { "disabled" : true }
-                  }
-                ] 
-              }
-            ]
-          }
-        ]
+        'data' : [/*No item at application launch.*/]
       },
     });
 }
