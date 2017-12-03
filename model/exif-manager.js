@@ -38,6 +38,9 @@ exports.getGpsCoordinates = function(path) {
   if(exif === null)
     return null;
 
+  if(!exif.hasOwnProperty("tags"))
+    return null;
+
   const tags = exif.tags;
   const gpsCoordinatesExist = tags.hasOwnProperty("GPSLatitude") && tags.hasOwnProperty("GPSLongitude");
   if(!gpsCoordinatesExist)
