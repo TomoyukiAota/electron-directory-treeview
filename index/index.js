@@ -9,7 +9,6 @@ const pathIdPairsHandlerForTreeView = require('../model/path-id-pairs/path-id-pa
 require('./splitter.js');
 const exifManager = require('../model/exif-manager');
 const googleMapsHander = require('../model/google-maps-handler');
-const mathUtility = require('../model/math-utility');
 
 $('#select-directory-button').on('click', function (event) {
   ipc.send('open-file-dialog');
@@ -63,10 +62,5 @@ function updateGoogleMaps(data) {
       return [fileName, gpsCoordinates.latitude, gpsCoordinates.longitude];  
     });
 
-  const center = {
-    latitude: mathUtility.mean(locations.map(location => location[1])),
-    longitude: mathUtility.mean(locations.map(location => location[2]))
-  };
-
-  googleMapsHander.render(locations, center);
+  googleMapsHander.render(locations);
 }
