@@ -99,12 +99,21 @@ function instantiatePromiseToFetchExif(directoryTreeElement) {
       let buffer;
       while (null !== (buffer = readStream.read(bufferLengthRequiredToParseExif))) {
         console.log(`Fetched ${buffer.length} bytes of data from ${directoryTreeElement.name}`);
-        exif = exifParser.create(buffer).parse();
-        console.log(exif);
+        try {
+          exif = exifParser.create(buffer).parse();
+        } catch (error) {
+          console.log(`Unable to parse EXIF information of ${directoryTreeElement.name}`);
+        }
       }
     });
     readStream.on('end', () => {
+      if(!exif) {
+        reject();
+        return;
+      }
+
       console.log(`Finished fetching data for ${directoryTreeElement.name}.`);
+      console.log(exif);
       resolve(exif);
     });
     readStream.on('error', () => {
