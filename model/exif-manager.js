@@ -46,16 +46,9 @@ exports.getGpsCoordinates = function(path) {
   if(!gpsCoordinatesExist)
     return null;
 
-  const latitude = tags.GPSLatitudeRef === "S"
-    ? -tags.GPSLatitude
-    :  tags.GPSLatitude;    //For the case of "N" (the most cases), or undefined, or any other value.
-  const longitude = tags.GPSLongitudeRef === "W"
-    ? -tags.GPSLongitude
-    :  tags.GPSLongitude;   //For the case of "E" (the most cases), or undefined, or any other value.
-
   return {
-    latitude: latitude,
-    longitude: longitude
+    latitude: tags.GPSLatitude,
+    longitude: tags.GPSLongitude
   }
 }
 
