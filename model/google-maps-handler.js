@@ -1,4 +1,4 @@
-// API for Google Maps is referenced by <script> tag below in index.html
+// Google Maps JavaScript API is referenced by <script> tag below in index.html
 // <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 
 exports.render = function(locations) {
@@ -29,14 +29,11 @@ exports.render = function(locations) {
 }
 
 function initialize() {
-  const locations = [
-    ['Bondi Beach', -33.890542, 151.274856],
-    ['Coogee Beach', -33.923036, 151.259052],
-    ['Cronulla Beach', -34.028249, 151.157507],
-    ['Manly Beach', -33.80010128657071, 151.28747820854187],
-    ['Maroubra Beach', -33.950198, 151.259302]
-  ];
-  exports.render(locations);
+  const map = new google.maps.Map(document.getElementById('map'), {
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: {lat: 0.0, lng: 0.0},
+    zoom: 0
+  });
 }
 
 initialize();
