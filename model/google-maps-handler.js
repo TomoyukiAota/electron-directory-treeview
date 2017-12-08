@@ -14,6 +14,7 @@ function renderWithLocations(locations) {
   });
   const infowindow = new google.maps.InfoWindow();
   const bounds = new google.maps.LatLngBounds();
+
   let marker, i;
   for (i = 0; i < locations.length; i++) {
     marker = new google.maps.Marker({
@@ -28,8 +29,15 @@ function renderWithLocations(locations) {
       };
     })(marker, i));
   }
+
+  google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+    const initialMaxZoomLevel = 15;
+    if (this.getZoom() > initialMaxZoomLevel) {
+      this.setZoom(initialMaxZoomLevel);
+    }
+  });
+
   map.fitBounds(bounds);
-  map.panToBounds(bounds);
 }
 
 function renderInitialState() {
