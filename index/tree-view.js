@@ -17,11 +17,19 @@ function initialize() {
       cascadeDownSelectedState(data);
       exports.onChanged(data);
     })
+    .on('refresh.jstree', function(e) {
+      treeView.jstree(true)
+        .get_json()
+        .filter(node => !node.state.disabled)
+        .forEach(node => {
+          treeView.jstree(true).select_node(node.id, false, true);
+        });
+    })
     .jstree(
     {
-      'core' : 
+      core : 
       {
-        'data' : [/*No item at application launch.*/]
+        data : [/*No item at application launch.*/]
       },
     });
 }
@@ -58,7 +66,7 @@ function selectChildrenRecursively(parentNode) {
     .map(id => treeView.jstree(true).get_node(id))
     .filter(node => !node.state.disabled)
     .forEach(node => {
-      treeView.jstree(true).select_node(node.id, "true", "true");
+      treeView.jstree(true).select_node(node.id, true, true);
       selectChildrenRecursively(node);
     });
 }
