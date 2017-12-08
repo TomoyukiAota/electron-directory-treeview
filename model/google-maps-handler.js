@@ -2,11 +2,10 @@
 // <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 
 exports.render = function(locations) {
-  if(locations.length === 0) {
-    renderInitialState();
-  } else {
-    renderWithLocations(locations);
-  }
+  if(locations.length === 0)
+    return;
+    
+  renderWithLocations(locations);
 }
 
 function renderWithLocations(locations) {
