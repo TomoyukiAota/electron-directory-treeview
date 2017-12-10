@@ -1,13 +1,14 @@
 const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
+const path = require('path');
+const url = require('url');
+
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
-const path = require('path');
-const url = require('url');
-const ipc = require('electron').ipcMain; // eslint-disable-line import/no-extraneous-dependencies
-const dialog = require('electron').dialog; // eslint-disable-line import/no-extraneous-dependencies
+const ipc = electron.ipcMain;
+const dialog = electron.dialog;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
