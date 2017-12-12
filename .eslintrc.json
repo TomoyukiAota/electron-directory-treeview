@@ -1,9 +1,14 @@
 {
     "extends": "airbnb-base",
+    "env": {
+        "browser": true
+    },
     "rules": {
         "arrow-parens": ["error", "as-needed"],
         "comma-dangle": ["error", "never"],
+        "curly": "off",
         "func-names": "off",
+        "no-shadow": "off",
         "no-unused-vars": ["error", { "args": "none" }],
         "no-use-before-define": ["error", { "functions": false }],
         "object-curly-spacing": "off",
