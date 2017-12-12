@@ -9,7 +9,7 @@ const treeView = $('#tree-view');
  * Event to be fired when tree view is changed.
  * @param {*} data data property of jsTree
  */
-exports.onChanged = function(data){}; //Default event handler is assigned to avoid being undefined.
+exports.onChanged = function (data) {}; // Default event handler is assigned to avoid being undefined.
 
 function initialize() {
   treeView
@@ -17,7 +17,7 @@ function initialize() {
       cascadeDownSelectedState(data);
       exports.onChanged(data);
     })
-    .on('refresh.jstree', function(e) {
+    .on('refresh.jstree', function (e) {
       treeView.jstree(true)
         .get_json()
         .filter(node => !node.state.disabled)
@@ -25,12 +25,11 @@ function initialize() {
           treeView.jstree(true).select_node(node.id, false, true);
         });
     })
-    .jstree(
-    {
-      core : 
+    .jstree({
+      core:
       {
-        data : [/*No item at application launch.*/]
-      },
+        data: [/* No item at application launch. */]
+      }
     });
 }
 
@@ -38,23 +37,25 @@ initialize();
 
 exports.update = function (selectedPath) {
   selectedDirectoryManager.update(selectedPath)
-  .then(() => {
-    const dataForJsTree = selectedDirectoryManager.generateDataForJsTree();
-    treeView.jstree(true).settings.core.data = dataForJsTree;
-    treeView.jstree(true).deselect_all(true);
-    treeView.jstree(true).close_all();
-    treeView.jstree(true).refresh();
-  });
-}
+    .then(() => {
+      const dataForJsTree = selectedDirectoryManager.generateDataForJsTree();
+      treeView.jstree(true).settings.core.data = dataForJsTree;
+      treeView.jstree(true).deselect_all(true);
+      treeView.jstree(true).close_all();
+      treeView.jstree(true).refresh();
+    });
+};
 
-exports.getSelectedNodes = function(data) {
-  var i, length, selectedNodes = [];
+exports.getSelectedNodes = function (data) {
+  let i;
+  let length;
+  const selectedNodes = [];
   for (i = 0, length = data.selected.length; i < length; i++) {
     const selectedNode = data.instance.get_node(data.selected[i]);
     selectedNodes.push(selectedNode);
   }
   return selectedNodes;
-}
+};
 
 function cascadeDownSelectedState(data) {
   const selectedNodes = exports.getSelectedNodes(data);

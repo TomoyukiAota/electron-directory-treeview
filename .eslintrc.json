@@ -8,6 +8,8 @@
         "comma-dangle": ["error", "never"],
         "curly": "off",
         "func-names": "off",
+        "max-len": ["error", { "code": 120, "ignoreTrailingComments": true }],
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
         "no-shadow": "off",
         "no-unused-vars": ["error", { "args": "none" }],
         "no-use-before-define": ["error", { "functions": false }],
