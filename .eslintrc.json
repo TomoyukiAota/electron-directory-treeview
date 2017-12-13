@@ -8,7 +8,9 @@
         "comma-dangle": ["error", "never"],
         "curly": "off",
         "func-names": "off",
+        "function-paren-newline": "off",
         "max-len": ["error", { "code": 120, "ignoreTrailingComments": true }],
+        "no-cond-assign": ["error", "except-parens"],
         "no-plusplus": "off",
         "no-shadow": "off",
         "no-unused-vars": ["error", { "args": "none" }],
@@ -16,6 +18,7 @@
         "object-curly-spacing": "off",
         "object-shorthand": ["error", "consistent"],
         "prefer-arrow-callback": "off",
-        "prefer-destructuring": "off"
+        "prefer-destructuring": "off",
+        "yoda": "off"
     }
 }
