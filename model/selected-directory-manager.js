@@ -1,4 +1,5 @@
 const directoryTree = require('directory-tree');
+const _ = require('lodash');
 
 const pathIdPairs = require('./path-id-pairs/path-id-pairs');
 const pathIdPairsHandlerForTreeView = require('./path-id-pairs/path-id-pairs-handler-for-tree-view');
@@ -8,13 +9,13 @@ let directoryTreeRoot;
 
 /**
  * Update selected directory to be managed in selected-directory-manager.
- * @param {string} selectedPath 
+ * @param {string} selectedPath
  */
-exports.update = async function(selectedPath) {
+exports.update = async function (selectedPath) {
   directoryTreeRoot = directoryTree(selectedPath);
   updatePathIdPairs();
   await exifManager.update(directoryTreeRoot);
-}
+};
 
 function updatePathIdPairs() {
   pathIdPairs.reset();
@@ -23,32 +24,32 @@ function updatePathIdPairs() {
 
 function updatePathIdPairsRecursively(directoryTreeElementArray) {
   directoryTreeElementArray.forEach(
-    (directoryTreeElement) => {
+    directoryTreeElement => {
       pathIdPairs.registerPath(directoryTreeElement.path);
-      if(directoryTreeElement.hasOwnProperty("children")) {
+      if (_.has(directoryTreeElement, 'children')) {
         updatePathIdPairsRecursively(directoryTreeElement.children);
       }
     }
-  )
+  );
 }
 
 /**
  * Generate data for jsTree.
  */
-exports.generateDataForJsTree = function() {
+exports.generateDataForJsTree = function () {
   return generateDataForJsTreeRecursively([directoryTreeRoot]);
-}
+};
 
 function generateDataForJsTreeRecursively(directoryTreeElementArray) {
-  var jstreeElementArray = [];
+  const jstreeElementArray = [];
   directoryTreeElementArray.forEach(
-    (directoryTreeElement) => {
-      var jstreeElement = {
+    directoryTreeElement => {
+      const jstreeElement = {
         id: pathIdPairsHandlerForTreeView.getIdForTreeView(directoryTreeElement.path),
         text: directoryTreeElement.name,
         state: { disabled: isDisabled(directoryTreeElement) }
       };
-      if(directoryTreeElement.hasOwnProperty("children")) {
+      if (_.has(directoryTreeElement, 'children')) {
         jstreeElement.children = generateDataForJsTreeRecursively(directoryTreeElement.children);
         const isAllChildrenDisabled = jstreeElement.children.every(child => child.state.disabled);
         jstreeElement.state.disabled = isAllChildrenDisabled;
@@ -60,7 +61,7 @@ function generateDataForJsTreeRecursively(directoryTreeElementArray) {
 }
 
 function isDisabled(directoryTreeElement) {
-  const isFile = () => directoryTreeElement.type === "file";
+  const isFile = directoryTreeElement.type === 'file';
   const gpsCoordinatesExist = exifManager.getGpsCoordinates(directoryTreeElement.path) !== null;
-  return isFile() && !gpsCoordinatesExist;
+  return isFile && !gpsCoordinatesExist;
 }
