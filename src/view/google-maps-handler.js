@@ -27,7 +27,8 @@ function renderWithLocations(locations) {
     bounds.extend(marker.position);
     google.maps.event.addListener(marker, 'click', (function (marker, i) {
       return function () {
-        infowindow.setContent(locations[i].fileName);
+        const contentString = createContentString(locations[i]);
+        infowindow.setContent(contentString);
         infowindow.open(map, marker);
       };
     })(marker, i));
@@ -41,6 +42,16 @@ function renderWithLocations(locations) {
   });
 
   map.fitBounds(bounds);
+}
+
+function createContentString(location) {
+  const thumbnail = location.thumbnail;
+  const thumbnailArea = thumbnail === null
+    ? 'Thumbnail is not available.'
+    : `<img border="0" src="data:image/jpg;base64,${thumbnail.base64}" `
+      + `width="${thumbnail.width}" height="${thumbnail.height}"/>`;
+  return `${thumbnailArea}`
+         + `<div style="text-align:center"><b>${location.name}<b/><div/>`;
 }
 
 function renderInitialState() {

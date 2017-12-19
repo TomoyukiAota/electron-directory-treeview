@@ -49,6 +49,26 @@ exports.getGpsCoordinates = function (path) {
   };
 };
 
+/**
+ * Get thumbnail (Base64-encoded string of the image, height, and width) of the specified file if exists.
+ * If not, returns null.
+ * @param {string} path file path
+ */
+exports.getThumbnail = function (path) {
+  const exif = exports.getExif(path);
+  if (exif === null || !exif.hasThumbnail('image/jpeg'))
+    return null;
+
+  const buffer = exif.getThumbnailBuffer();
+  const base64Encoded = btoa(String.fromCharCode.apply(null, buffer));
+  const size = exif.getThumbnailSize();
+  return {
+    base64: base64Encoded,
+    height: size.height,
+    width: size.width
+  };
+};
+
 function reset() {
   exifPromises.length = 0;
   pathExifPairs.length = 0;
