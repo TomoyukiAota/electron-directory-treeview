@@ -36,20 +36,16 @@ exports.getExif = function (path) {
  */
 exports.getGpsCoordinates = function (path) {
   const exif = exports.getExif(path);
-  if (exif === null)
+  if (exif === null || !_.has(exif, 'tags'))
     return null;
 
-  if (!_.has(exif, 'tags'))
-    return null;
-
-  const tags = exif.tags;
-  const gpsCoordinatesExist = _.has(tags, 'GPSLatitude') && _.has(tags, 'GPSLongitude');
+  const gpsCoordinatesExist = _.has(exif.tags, 'GPSLatitude') && _.has(exif.tags, 'GPSLongitude');
   if (!gpsCoordinatesExist)
     return null;
 
   return {
-    latitude: tags.GPSLatitude,
-    longitude: tags.GPSLongitude
+    latitude: exif.tags.GPSLatitude,
+    longitude: exif.tags.GPSLongitude
   };
 };
 
