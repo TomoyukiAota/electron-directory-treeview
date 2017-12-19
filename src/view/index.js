@@ -3,11 +3,11 @@ const ipc = require('electron').ipcRenderer; // eslint-disable-line import/no-ex
 const $ = require('jquery');
 const directoryTree = require('directory-tree');
 
-const treeView = require('./tree-view.js');
+const treeView = require('./tree-view');
 const pathIdPairsHandlerForTreeView = require('../model/path-id-pairs/path-id-pairs-handler-for-tree-view');
-require('./splitter.js');
+require('./splitter');
 const exifManager = require('../model/exif-manager');
-const googleMapsHander = require('../model/google-maps-handler');
+const googleMapsHander = require('./google-maps-handler');
 
 $('#select-directory-button').on('click', function (event) {
   ipc.send('open-file-dialog');
