@@ -57,7 +57,11 @@ function updateGoogleMaps(data) {
       const fileName = node.text;
       const path = pathIdPairsHandlerForTreeView.getPath(node.id);
       const gpsCoordinates = exifManager.getGpsCoordinates(path);
-      return [fileName, gpsCoordinates.latitude, gpsCoordinates.longitude];
+      return {
+        fileName: fileName,
+        latitude: gpsCoordinates.latitude,
+        longitude: gpsCoordinates.longitude
+      };
     });
 
   googleMapsHander.render(locations);
