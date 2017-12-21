@@ -46,24 +46,28 @@ function displaySelectedItems(data) {
   $('#selected-items').html(`${title}${itemDescription}`);
 }
 
-function updateGoogleMaps(data) {
-  const locations = treeView
+async function updateGoogleMaps(data) {
+  const locationPromises = treeView
     .getSelectedNodes(data)
     .filter(node => {
       const path = pathIdPairsHandlerForTreeView.getPath(node.id);
       return exifManager.getGpsCoordinates(path) !== null;
     })
-    .map(node => {
+    .map(async node => {
       const fileName = node.text;
       const path = pathIdPairsHandlerForTreeView.getPath(node.id);
       const gpsCoordinates = exifManager.getGpsCoordinates(path);
+      const thumbnail = await exifManager.getThumbnail(path);
       return {
         name: fileName,
         latitude: gpsCoordinates.latitude,
         longitude: gpsCoordinates.longitude,
-        thumbnail: exifManager.getThumbnail(path)
+        thumbnail: thumbnail
       };
     });
 
-  googleMapsHander.render(locations);
+  await Promise.all(locationPromises)
+    .then(locations => {
+      googleMapsHander.render(locations);
+    });
 }

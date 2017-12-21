@@ -54,7 +54,7 @@ exports.getGpsCoordinates = function (path) {
  * If not, returns null.
  * @param {string} path file path
  */
-exports.getThumbnail = function (path) {
+exports.getThumbnail = async function (path) {
   const exif = exports.getExif(path);
   if (exif === null || !exif.hasThumbnail('image/jpeg'))
     return null;
@@ -62,8 +62,9 @@ exports.getThumbnail = function (path) {
   const buffer = exif.getThumbnailBuffer();
   const base64Encoded = btoa(String.fromCharCode.apply(null, buffer));
   const size = exif.getThumbnailSize();
+  const rotated = await imageUtility.correctOrientation(base64Encoded, exif.tags.Orientation);
   return {
-    base64: base64Encoded,
+    base64: rotated,
     height: size.height,
     width: size.width
   };

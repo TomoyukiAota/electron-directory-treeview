@@ -48,7 +48,7 @@ function createContentString(location) {
   const thumbnail = location.thumbnail;
   const thumbnailArea = thumbnail === null
     ? 'Thumbnail is not available.'
-    : `<img border="0" src="data:image/jpg;base64,${thumbnail.base64}" `
+    : `<img border="0" src="${thumbnail.base64}" `
       + `width="${thumbnail.width}" height="${thumbnail.height}"/>`;
   return `${thumbnailArea}`
          + `<div style="text-align:center"><b>${location.name}<b/><div/>`;
