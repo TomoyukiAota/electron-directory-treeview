@@ -62,7 +62,7 @@ exports.getThumbnail = async function (path) {
   const buffer = exif.getThumbnailBuffer();
   const base64String = btoa(String.fromCharCode.apply(null, buffer));
   const dataUrl = `data:image/jpg;base64,${base64String}`;
-  const rotated = await imageUtility.correctOrientation(dataUrl, exif.tags.Orientation);
+  const rotated = await imageUtility.correctRotation(dataUrl, exif.tags.Orientation);
   return {
     dataUrl: rotated.dataUrl,
     height: rotated.height,

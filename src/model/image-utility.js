@@ -4,7 +4,13 @@ exports.isSupportedFilenameExtension = function (filenameExtension) {
   return supportedFilenameExtensions.includes(filenameExtension);
 };
 
-exports.correctOrientation = function (dataUrl, orientation) {
+/**
+ * Correct rotation of an image using EXIF orientation
+ * @param {string} dataUrl data URL of the image to correct rotation
+ * @param {number} orientation EXIF orientation
+ * @returns rotated image
+ */
+exports.correctRotation = function (dataUrl, orientation) {
   return new Promise(function (resolve, reject) {
     const img = new Image();
 
