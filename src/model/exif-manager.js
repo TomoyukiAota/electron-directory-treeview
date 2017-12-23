@@ -50,7 +50,7 @@ exports.getGpsCoordinates = function (path) {
 };
 
 /**
- * Get thumbnail (Base64-encoded string of the image, height, and width) of the specified file if exists.
+ * Get the thumbnail (Data URL, height, and width) of the specified file if exists.
  * If not, returns null.
  * @param {string} path file path
  */
@@ -60,13 +60,13 @@ exports.getThumbnail = async function (path) {
     return null;
 
   const buffer = exif.getThumbnailBuffer();
-  const base64Encoded = btoa(String.fromCharCode.apply(null, buffer));
-  const size = exif.getThumbnailSize();
-  const rotated = await imageUtility.correctOrientation(base64Encoded, exif.tags.Orientation);
+  const base64String = btoa(String.fromCharCode.apply(null, buffer));
+  const dataUrl = `data:image/jpg;base64,${base64String}`;
+  const rotated = await imageUtility.correctOrientation(dataUrl, exif.tags.Orientation);
   return {
-    base64: rotated,
-    height: size.height,
-    width: size.width
+    dataUrl: rotated.dataUrl,
+    height: rotated.height,
+    width: rotated.width
   };
 };
 

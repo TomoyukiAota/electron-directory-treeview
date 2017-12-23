@@ -4,7 +4,7 @@ exports.isSupportedFilenameExtension = function (filenameExtension) {
   return supportedFilenameExtensions.includes(filenameExtension);
 };
 
-exports.correctOrientation = function (srcBase64, srcOrientation) {
+exports.correctOrientation = function (dataUrl, orientation) {
   return new Promise(function (resolve, reject) {
     const img = new Image();
 
@@ -14,8 +14,8 @@ exports.correctOrientation = function (srcBase64, srcOrientation) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
 
-      // set proper canvas dimensions before transform & export
-      if (4 < srcOrientation && srcOrientation < 9) {
+      // set canvas dimensions according to the specified orientation
+      if (4 < orientation && orientation < 9) {
         canvas.width = height;
         canvas.height = width;
       } else {
@@ -23,8 +23,8 @@ exports.correctOrientation = function (srcBase64, srcOrientation) {
         canvas.height = height;
       }
 
-      // transform context before drawing image
-      switch (srcOrientation) {
+      // transform context according to the specified orientation
+      switch (orientation) {
         case 2: ctx.transform(-1, 0, 0, 1, width, 0); break;
         case 3: ctx.transform(-1, 0, 0, -1, width, height); break;
         case 4: ctx.transform(1, 0, 0, -1, 0, height); break;
@@ -35,14 +35,15 @@ exports.correctOrientation = function (srcBase64, srcOrientation) {
         default: break;
       }
 
-      // draw image
       ctx.drawImage(img, 0, 0);
-
-      // export base64
-      resolve(canvas.toDataURL());
+      resolve({
+        dataUrl: canvas.toDataURL(),
+        width: canvas.width,
+        height: canvas.height
+      });
     };
 
-    img.src = `data:image/jpg;base64,${srcBase64}`;
+    img.src = dataUrl;
   });
 };
 
