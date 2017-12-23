@@ -67,7 +67,5 @@ async function updateGoogleMaps(data) {
     });
 
   await Promise.all(locationPromises)
-    .then(locations => {
-      googleMapsHander.render(locations);
-    });
+    .then(locations => googleMapsHander.render(locations));
 }
