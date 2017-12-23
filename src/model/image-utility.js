@@ -1,5 +1,9 @@
 const supportedFilenameExtensions = ['.jpeg', '.jpg', '.jpe', '.jfif', '.jfi', '.jif']; // JPEG extenions
 
+/**
+ * Returns true if the specified filename extension is supported in this application.
+ * @param {string} filenameExtension filename extension
+ */
 exports.isSupportedFilenameExtension = function (filenameExtension) {
   return supportedFilenameExtensions.includes(filenameExtension);
 };
@@ -52,4 +56,3 @@ exports.correctRotation = function (dataUrl, orientation) {
     img.src = dataUrl;
   });
 };
-
