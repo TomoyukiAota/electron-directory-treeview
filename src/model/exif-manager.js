@@ -31,6 +31,17 @@ exports.getExif = function (path) {
 };
 
 /**
+ * Gets the property of EXIF of the file.
+ * If it does not exist, null (or the specified default value) is returned.
+ * @param {string} filePath file path
+ * @param {string} property property of EXIF
+ * @param {any} defaultValue default value
+ */
+exports.getExifProperty = function (filePath, property, defaultValue = null) {
+  return _.get(exports.getExif(filePath), property, defaultValue);
+};
+
+/**
  * Get GPS coordinates for the specified file if exists. If not, returns null.
  * @param {string} path file path
  */

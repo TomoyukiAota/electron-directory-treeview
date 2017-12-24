@@ -21,6 +21,7 @@
     "exif-parser": "0.1.12",
     "jquery": "3.2.1",
     "jstree": "3.3.4",
-    "lodash": "4.17.4"
+    "lodash": "4.17.4",
+    "moment-timezone": "0.5.14"
   }
 }
