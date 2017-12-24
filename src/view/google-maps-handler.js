@@ -3,15 +3,15 @@
 
 /* global google */
 
-exports.render = function (locations) {
-  if (locations.length === 0) {
+exports.render = function (photos) {
+  if (photos.length === 0) {
     renderInitialState();
   } else {
-    renderWithLocations(locations);
+    renderWithPhotos(photos);
   }
 };
 
-function renderWithLocations(locations) {
+function renderWithPhotos(photos) {
   const map = new google.maps.Map(document.getElementById('map'), {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
@@ -19,15 +19,15 @@ function renderWithLocations(locations) {
   const bounds = new google.maps.LatLngBounds();
 
   let marker, i;
-  for (i = 0; i < locations.length; i++) {
+  for (i = 0; i < photos.length; i++) {
     marker = new google.maps.Marker({
-      position: new google.maps.LatLng(locations[i].latitude, locations[i].longitude),
+      position: new google.maps.LatLng(photos[i].latitude, photos[i].longitude),
       map: map
     });
     bounds.extend(marker.position);
     google.maps.event.addListener(marker, 'click', (function (marker, i) {
       return function () {
-        const contentString = createContentString(locations[i]);
+        const contentString = createContentString(photos[i]);
         infowindow.setContent(contentString);
         infowindow.open(map, marker);
       };
@@ -44,14 +44,14 @@ function renderWithLocations(locations) {
   map.fitBounds(bounds);
 }
 
-function createContentString(location) {
-  const thumbnail = location.thumbnail;
+function createContentString(photo) {
+  const thumbnail = photo.thumbnail;
   const thumbnailArea = thumbnail === null
     ? 'Thumbnail is not available.'
     : `<img border="0" src="${thumbnail.dataUrl}" `
       + `width="${thumbnail.width}" height="${thumbnail.height}"/>`;
   return `${thumbnailArea}`
-         + `<div style="text-align:center"><b>${location.name}<b/><div/>`;
+         + `<div style="text-align:center"><b>${photo.name}<b/><div/>`;
 }
 
 function renderInitialState() {

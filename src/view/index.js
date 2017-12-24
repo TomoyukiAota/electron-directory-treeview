@@ -47,25 +47,29 @@ function displaySelectedItems(data) {
 }
 
 async function updateGoogleMaps(data) {
-  const locationPromises = treeView
-    .getSelectedNodes(data)
-    .filter(node => {
-      const path = pathIdPairsHandlerForTreeView.getPath(node.id);
-      return exifManager.getGpsCoordinates(path) !== null;
-    })
-    .map(async node => {
-      const fileName = node.text;
-      const path = pathIdPairsHandlerForTreeView.getPath(node.id);
-      const gpsCoordinates = exifManager.getGpsCoordinates(path);
-      const thumbnail = await exifManager.getThumbnail(path);
-      return {
-        name: fileName,
-        latitude: gpsCoordinates.latitude,
-        longitude: gpsCoordinates.longitude,
-        thumbnail: thumbnail
-      };
-    });
+  function hasGpsCoordinates(node) {
+    const path = pathIdPairsHandlerForTreeView.getPath(node.id);
+    return exifManager.getGpsCoordinates(path) !== null;
+  }
 
-  await Promise.all(locationPromises)
-    .then(locations => googleMapsHander.render(locations));
+  async function createPhotoPromise(node) {
+    const fileName = node.text;
+    const path = pathIdPairsHandlerForTreeView.getPath(node.id);
+    const gpsCoordinates = exifManager.getGpsCoordinates(path);
+    const thumbnail = await exifManager.getThumbnail(path);
+    return {
+      name: fileName,
+      latitude: gpsCoordinates.latitude,
+      longitude: gpsCoordinates.longitude,
+      thumbnail: thumbnail
+    };
+  }
+
+  const photoPromises = treeView
+    .getSelectedNodes(data)
+    .filter(node => hasGpsCoordinates(node))
+    .map(node => createPhotoPromise(node));
+
+  await Promise.all(photoPromises)
+    .then(photos => googleMapsHander.render(photos));
 }
