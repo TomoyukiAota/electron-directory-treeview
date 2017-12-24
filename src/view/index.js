@@ -53,34 +53,6 @@ async function updateGoogleMaps(data) {
     return exifManager.getGpsCoordinates(path) !== null;
   }
 
-  async function createPhotoPromise(node) {
-    const fileName = node.text;
-    const path = pathIdPairsHandlerForTreeView.getPath(node.id);
-    const gpsCoordinates = exifManager.getGpsCoordinates(path);
-    const thumbnail = await exifManager.getThumbnail(path);
-
-    // DateTimeOriginal in EXIF is recorded in local time when the photo was taken.
-    // moment.js guesses time zone and converts time using the guessed time zone,
-    // but converting the local time using guessed time zone results in incorrect time.
-    // (It works fine for UTC time, but not for the local time.)
-    // Getting UTC time from the local time using GPS coordnates may be possible,
-    // but it will take time to implement such routine.
-    // So, currently the local time is just used.
-    // In order to just use the local time avoiding such conversion,
-    // the time zone of Moment instance is set to UTC because no conversion will occur for UTC time zone.
-    const dateTimeOriginal = exifManager.getExifProperty(path, 'tags.DateTimeOriginal');
-    const formattedDateTimeOriginal = moment.unix(dateTimeOriginal).tz('UTC').format('YYYY/MM/DD ddd HH:mm:ss');
-
-    return {
-      name: fileName,
-      latitude: gpsCoordinates.latitude,
-      longitude: gpsCoordinates.longitude,
-      thumbnail: thumbnail,
-      gpsTime: null,
-      dateTimeOriginal: formattedDateTimeOriginal
-    };
-  }
-
   const photoPromises = treeView
     .getSelectedNodes(data)
     .filter(node => hasGpsCoordinates(node))
@@ -88,4 +60,34 @@ async function updateGoogleMaps(data) {
 
   await Promise.all(photoPromises)
     .then(photos => googleMapsHander.render(photos));
+}
+
+async function createPhotoPromise(node) {
+  const fileName = node.text;
+  const path = pathIdPairsHandlerForTreeView.getPath(node.id);
+  const gpsCoordinates = exifManager.getGpsCoordinates(path);
+  const thumbnail = await exifManager.getThumbnail(path);
+  const dateTimeOriginal = getDateTimeOriginal(path);
+  return {
+    name: fileName,
+    latitude: gpsCoordinates.latitude,
+    longitude: gpsCoordinates.longitude,
+    thumbnail: thumbnail,
+    gpsTime: null,
+    dateTimeOriginal: dateTimeOriginal
+  };
+}
+
+function getDateTimeOriginal(path) {
+  // DateTimeOriginal in EXIF is recorded in local time when the photo was taken.
+  // moment.js guesses time zone and converts time using the guessed time zone,
+  // but converting the local time using guessed time zone results in incorrect time.
+  // (It works fine for UTC time, but not for the local time.)
+  // Getting UTC time from the local time using GPS coordnates may be possible,
+  // but it will take time to implement such routine.
+  // So, currently the local time is just used.
+  // In order to just use the local time avoiding such conversion,
+  // the time zone of Moment instance is set to UTC because no conversion will occur for UTC time zone.
+  const dateTimeOriginal = exifManager.getExifProperty(path, 'tags.DateTimeOriginal');
+  return moment.unix(dateTimeOriginal).tz('UTC').format('YYYY/MM/DD ddd HH:mm:ss');
 }
