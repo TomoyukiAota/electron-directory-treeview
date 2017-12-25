@@ -93,7 +93,14 @@ exports.getGpsDateTime = function (path) {
   const second = _.padStart(time[2].toString().split('.')[0], 2, '0'); // GPSTimeStamp[2] has milisecond part after ".", but use the second part only.
   const timeString = `${hour}:${minute}:${second}`;
 
-  return moment.utc(`${dateString} ${timeString}`);
+  // GPSDateStamp and/or GPSTimeStamp of some files are corrupted (such as 2014:10:281 for GPSDateStamp).
+  // Therefore, check their formats and return null if they are invalid.
+  moment.suppressDeprecationWarnings = true;
+  const dateTime = moment.utc(`${dateString} ${timeString}`);
+  moment.suppressDeprecationWarnings = false;
+  return dateTime.isValid()
+    ? dateTime
+    : null;
 };
 
 function reset() {
