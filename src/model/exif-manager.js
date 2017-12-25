@@ -79,6 +79,11 @@ exports.getThumbnail = async function (path) {
   };
 };
 
+/**
+ * Gets Moment instance from GPSDateStamp and GPSTimeStamp.
+ * If they do not exist or exist in incorrect format, null is returned.
+ * @param {string} path file path
+ */
 exports.getGpsDateTime = function (path) {
   const exif = exports.getExif(path);
   const gpsDateTimeExists = _.has(exif, 'tags.GPSDateStamp') && _.has(exif, 'tags.GPSTimeStamp');
