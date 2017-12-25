@@ -75,9 +75,25 @@ async function createPhotoPromise(node) {
 }
 
 function getDateTime(path) {
-  return getGpsDateTime(path) || getDateTimeOriginal(path);
+  // No support for time zone using GPSDateStamp and GPSTimeStamp.
+  // This is because GPSDateStamp does not exist in old cameras like iPhone 4 and 5,
+  // so a large number of photos cannot support time zone.
+  // Also, time zone is not really neccessary feature because photos' local time is enough.
+  // return getGpsDateTime(path) || getDateTimeOriginal(path);
+
+  // Therefore, use EXIF's DateTimeOriginal property which is saved in local time when the photo was taken.
+  return getDateTimeOriginal(path);
 }
 
+
+// When supporting time zone, use the function below.
+/**
+ * Gets formatted date and time from GPSDateStamp and GPSTimeStamp.
+ * These EXIF properties are saved in UTC, so time zone is applied.
+ * If they do not exist or exist in incorrect format, null is returned.
+ * @param {string} path file path
+ */
+// eslint-disable-next-line no-unused-vars
 function getGpsDateTime(path) {
   const gpsDateTime = exifManager.getGpsDateTime(path);
   if (!gpsDateTime)
