@@ -11,6 +11,7 @@
         "function-paren-newline": "off",
         "max-len": ["error", { "code": 120, "ignoreTrailingComments": true }],
         "no-cond-assign": ["error", "except-parens"],
+        "no-multi-spaces": "off",
         "no-plusplus": "off",
         "no-shadow": "off",
         "no-unused-vars": ["error", { "args": "none" }],

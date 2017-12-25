@@ -1,6 +1,7 @@
 const fs = require('fs');
 const exifParser = require('exif-parser');
 const _ = require('lodash');
+const moment = require('moment-timezone');
 
 const imageUtility = require('./image-utility');
 
@@ -47,10 +48,7 @@ exports.getExifProperty = function (filePath, property, defaultValue = null) {
  */
 exports.getGpsCoordinates = function (path) {
   const exif = exports.getExif(path);
-  if (exif === null || !_.has(exif, 'tags'))
-    return null;
-
-  const gpsCoordinatesExist = _.has(exif.tags, 'GPSLatitude') && _.has(exif.tags, 'GPSLongitude');
+  const gpsCoordinatesExist = _.has(exif, 'tags.GPSLatitude') && _.has(exif, 'tags.GPSLongitude');
   if (!gpsCoordinatesExist)
     return null;
 
@@ -79,6 +77,23 @@ exports.getThumbnail = async function (path) {
     height: rotated.height,
     width: rotated.width
   };
+};
+
+exports.getGpsDateTime = function (path) {
+  const exif = exports.getExif(path);
+  const gpsDateTimeExists = _.has(exif, 'tags.GPSDateStamp') && _.has(exif, 'tags.GPSTimeStamp');
+  if (!gpsDateTimeExists)
+    return null;
+
+  const dateString = exif.tags.GPSDateStamp.replace(/:/g, '-');
+
+  const time = exif.tags.GPSTimeStamp;
+  const hour   = _.padStart(time[0], 2, '0');
+  const minute = _.padStart(time[1], 2, '0');
+  const second = _.padStart(time[2].toString().split('.')[0], 2, '0'); // GPSTimeStamp[2] has milisecond part after ".", but use the second part only.
+  const timeString = `${hour}:${minute}:${second}`;
+
+  return moment.utc(`${dateString} ${timeString}`);
 };
 
 function reset() {

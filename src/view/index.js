@@ -75,21 +75,26 @@ async function createPhotoPromise(node) {
 }
 
 function getDateTime(path) {
-  const gpsTime = null;
-  const dateTimeOriginal = getDateTimeOriginal(path);
-  return gpsTime || dateTimeOriginal;
+  return getGpsDateTime(path) || getDateTimeOriginal(path);
+}
+
+function getGpsDateTime(path) {
+  const gpsDateTime = exifManager.getGpsDateTime(path);
+  if (!gpsDateTime)
+    return null;
+
+  const timeZone = moment.tz.guess();
+  const formattedGpsDateTime = gpsDateTime.tz(timeZone).format('YYYY/MM/DD ddd HH:mm:ss');
+  const formattedTimeZone = moment.tz(timeZone).format('z');
+  return `${formattedGpsDateTime} (${formattedTimeZone})`;
 }
 
 function getDateTimeOriginal(path) {
-  // DateTimeOriginal in EXIF is recorded in local time when the photo was taken.
-  // moment.js guesses time zone and converts time using the guessed time zone,
-  // but converting the local time using guessed time zone results in incorrect time.
-  // (It works fine for UTC time, but not for the local time.)
-  // Getting UTC time from the local time using GPS coordnates may be possible,
-  // but it will take time to implement such routine.
-  // So, currently the local time is just used.
+  // DateTimeOriginal in EXIF is recorded in unix timestamp format but in local time when the photo was taken.
+  // Also, moment.js guesses time zone and formats time using the guessed time zone.
+  // So, formatting the local time using guessed time zone results in extra conversion which gives incorrect time.
   // In order to just use the local time avoiding such conversion,
-  // the time zone of Moment instance is set to UTC because no conversion will occur for UTC time zone.
+  // the time zone of Moment instance is set to UTC because no conversion will occur when UTC time zone is used.
   const dateTimeOriginal = exifManager.getExifProperty(path, 'tags.DateTimeOriginal');
   if (!dateTimeOriginal)
     return null;
