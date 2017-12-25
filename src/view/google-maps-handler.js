@@ -45,20 +45,12 @@ function renderWithPhotos(photos) {
 }
 
 function createContentString(photo) {
-  function generateDateTime(photo) {
-    if (photo.gpsTime === null) {
-      return photo.dateTimeOriginal;
-    }
-
-    return 'TODO';
-  }
-
   const thumbnail = photo.thumbnail;
   const thumbnailArea = thumbnail === null
     ? 'Thumbnail is not available.'
     : `<img border="0" src="${thumbnail.dataUrl}" `
       + `width="${thumbnail.width}" height="${thumbnail.height}"/>`;
-  const dateTime = generateDateTime(photo);
+  const dateTime = photo.dateTime || 'Date taken is not available.';
   const description
     = `<div style="text-align:center"><b>${photo.name}<b/><div/>`
     + `<div style="text-align:center"><b>${dateTime}<b/><div/>`;

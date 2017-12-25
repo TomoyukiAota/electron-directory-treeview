@@ -63,19 +63,21 @@ async function updateGoogleMaps(data) {
 }
 
 async function createPhotoPromise(node) {
-  const fileName = node.text;
   const path = pathIdPairsHandlerForTreeView.getPath(node.id);
   const gpsCoordinates = exifManager.getGpsCoordinates(path);
-  const thumbnail = await exifManager.getThumbnail(path);
-  const dateTimeOriginal = getDateTimeOriginal(path);
   return {
-    name: fileName,
+    name: node.text,
     latitude: gpsCoordinates.latitude,
     longitude: gpsCoordinates.longitude,
-    thumbnail: thumbnail,
-    gpsTime: null,
-    dateTimeOriginal: dateTimeOriginal
+    thumbnail: await exifManager.getThumbnail(path),
+    dateTime: getDateTime(path)
   };
+}
+
+function getDateTime(path) {
+  const gpsTime = null;
+  const dateTimeOriginal = getDateTimeOriginal(path);
+  return gpsTime || dateTimeOriginal;
 }
 
 function getDateTimeOriginal(path) {
@@ -89,5 +91,8 @@ function getDateTimeOriginal(path) {
   // In order to just use the local time avoiding such conversion,
   // the time zone of Moment instance is set to UTC because no conversion will occur for UTC time zone.
   const dateTimeOriginal = exifManager.getExifProperty(path, 'tags.DateTimeOriginal');
+  if (!dateTimeOriginal)
+    return null;
+
   return moment.unix(dateTimeOriginal).tz('UTC').format('YYYY/MM/DD ddd HH:mm:ss');
 }
