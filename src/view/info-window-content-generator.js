@@ -1,3 +1,7 @@
+/**
+ * Generates the content of info window displayed when a marker is clicked in Google Maps.
+ * @param {*} photo photo information
+ */
 exports.generate = function (photo) {
   const thumbnail = photo.thumbnail;
   const thumbnailArea = thumbnail === null
