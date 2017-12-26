@@ -9,7 +9,7 @@ const pathIdPairsHandlerForTreeView = require('../model/path-id-pairs/path-id-pa
 require('./splitter');
 const exifManager = require('../model/exif-manager');
 const googleMapsHander = require('./google-maps-handler');
-const dateTimeUtility = require('../model/date-time-utility');
+const photoInfoGenerator = require('../model/photo-info-generator');
 
 $('#select-directory-button').on('click', function (event) {
   ipc.send('open-file-dialog');
@@ -59,20 +59,12 @@ async function updateGoogleMaps(data) {
   const photoPromises = treeView
     .getSelectedNodes(data)
     .filter(node => hasGpsCoordinates(node))
-    .map(node => createPhotoPromise(node));
+    .map(node => {
+      const fileName = node.text;
+      const path = pathIdPairsHandlerForTreeView.getPath(node.id);
+      return photoInfoGenerator.generate(fileName, path);
+    });
 
   await Promise.all(photoPromises)
     .then(photos => googleMapsHander.render(photos));
-}
-
-async function createPhotoPromise(node) {
-  const path = pathIdPairsHandlerForTreeView.getPath(node.id);
-  const gpsCoordinates = exifManager.getGpsCoordinates(path);
-  return {
-    name: node.text,
-    latitude: gpsCoordinates.latitude,
-    longitude: gpsCoordinates.longitude,
-    thumbnail: await exifManager.getThumbnail(path),
-    dateTime: dateTimeUtility.getDateTime(path)
-  };
 }
