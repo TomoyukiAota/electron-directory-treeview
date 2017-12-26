@@ -3,6 +3,8 @@
 
 /* global google */
 
+const infoWindowContentGenerator = require('./info-window-content-generator');
+
 exports.render = function (photos) {
   if (photos.length === 0) {
     renderInitialState();
@@ -27,8 +29,8 @@ function renderWithPhotos(photos) {
     bounds.extend(marker.position);
     google.maps.event.addListener(marker, 'click', (function (marker, i) {
       return function () {
-        const contentString = createContentString(photos[i]);
-        infoWindow.setContent(contentString);
+        const content = infoWindowContentGenerator.generate(photos[i]);
+        infoWindow.setContent(content);
         infoWindow.open(map, marker);
       };
     })(marker, i));
@@ -42,19 +44,6 @@ function renderWithPhotos(photos) {
   });
 
   map.fitBounds(bounds);
-}
-
-function createContentString(photo) {
-  const thumbnail = photo.thumbnail;
-  const thumbnailArea = thumbnail === null
-    ? 'Thumbnail is not available.'
-    : `<img border="0" src="${thumbnail.dataUrl}" `
-      + `width="${thumbnail.width}" height="${thumbnail.height}"/>`;
-  const dateTime = photo.dateTime || 'Date taken is not available.';
-  const description
-    = `<div style="text-align:center"><b>${photo.name}<b/><div/>`
-    + `<div style="text-align:center"><b>${dateTime}<b/><div/>`;
-  return thumbnailArea + description;
 }
 
 function renderInitialState() {
