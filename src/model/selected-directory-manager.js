@@ -13,13 +13,13 @@ let directoryTreeRoot;
  */
 exports.update = async function (selectedPath) {
   directoryTreeRoot = directoryTree(selectedPath);
-  updatePathIdPairs();
+  updatePathIdPairs(directoryTreeRoot);
   await exifManager.update(directoryTreeRoot);
 };
 
-function updatePathIdPairs() {
+function updatePathIdPairs(directoryTreeRoot) {
   pathIdPairs.reset();
-  return updatePathIdPairsRecursively([directoryTreeRoot]);
+  updatePathIdPairsRecursively([directoryTreeRoot]);
 }
 
 function updatePathIdPairsRecursively(directoryTreeElementArray) {

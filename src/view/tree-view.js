@@ -1,8 +1,6 @@
 const $ = require('jquery');
 require('jstree');
 
-const selectedDirectoryManager = require('../model/selected-directory-manager');
-
 const treeView = $('#tree-view');
 
 /**
@@ -35,9 +33,7 @@ function initialize() {
 
 initialize();
 
-exports.update = async function (selectedPath) {
-  await selectedDirectoryManager.update(selectedPath);
-  const dataForJsTree = selectedDirectoryManager.generateDataForJsTree();
+exports.update = function (dataForJsTree) {
   treeView.jstree(true).settings.core.data = dataForJsTree;
   treeView.jstree(true).deselect_all(true);
   treeView.jstree(true).close_all();

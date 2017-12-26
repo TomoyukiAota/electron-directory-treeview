@@ -4,6 +4,7 @@ const $ = require('jquery');
 const directoryTree = require('directory-tree');
 const moment = require('moment-timezone');
 
+const selectedDirectoryManager = require('../model/selected-directory-manager');
 const treeView = require('./tree-view');
 const pathIdPairsHandlerForTreeView = require('../model/path-id-pairs/path-id-pairs-handler-for-tree-view');
 require('./splitter');
@@ -14,11 +15,13 @@ $('#select-directory-button').on('click', function (event) {
   ipc.send('open-file-dialog');
 });
 
-ipc.on('selected-directory', function (event, selectedPathArray) {
+ipc.on('selected-directory', async function (event, selectedPathArray) {
   const selectedPath = selectedPathArray[0];
   $('#selected-directory-area').text(`${pathModule.dirname(selectedPath)}`);
   renderDirectoryTreeArea(selectedPath);
-  treeView.update(selectedPath);
+  await selectedDirectoryManager.update(selectedPath);
+  const dataForJsTree = selectedDirectoryManager.generateDataForJsTree();
+  treeView.update(dataForJsTree);
 });
 
 function renderDirectoryTreeArea(selectedPath) {
