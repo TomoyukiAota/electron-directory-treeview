@@ -15,7 +15,7 @@ function renderWithPhotos(photos) {
   const map = new google.maps.Map(document.getElementById('map'), {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
-  const infowindow = new google.maps.InfoWindow();
+  const infoWindow = new google.maps.InfoWindow();
   const bounds = new google.maps.LatLngBounds();
 
   let marker, i;
@@ -28,8 +28,8 @@ function renderWithPhotos(photos) {
     google.maps.event.addListener(marker, 'click', (function (marker, i) {
       return function () {
         const contentString = createContentString(photos[i]);
-        infowindow.setContent(contentString);
-        infowindow.open(map, marker);
+        infoWindow.setContent(contentString);
+        infoWindow.open(map, marker);
       };
     })(marker, i));
   }
