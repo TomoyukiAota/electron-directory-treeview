@@ -17,6 +17,20 @@ exports.generate = function (photo) {
   return root;
 };
 
+function createThumbnailElement(photo) {
+  if (photo.thumbnail === null) {
+    return document.createTextNode('Thumbnail is not available.');
+  }
+
+  const thumbnailElement = document.createElement('img');
+  thumbnailElement.border  = 0;
+  thumbnailElement.src     = photo.thumbnail.dataUrl;
+  thumbnailElement.width   = photo.thumbnail.width;
+  thumbnailElement.height  = photo.thumbnail.height;
+  thumbnailElement.onclick = event => console.log(dateTimeUtility.getDateTime(photo.path));
+  return thumbnailElement;
+}
+
 function createNameElement(photo) {
   const nameElement = document.createElement('div');
   nameElement.style.textAlign  = 'center';
@@ -32,17 +46,4 @@ function createDateTimeElement(photo) {
   dateTimeElement.style.fontWeight = 'bold';
   dateTimeElement.innerText        = dateTime;
   return dateTimeElement;
-}
-
-function createThumbnailElement(photo) {
-  const imgElement = document.createElement('img');
-  imgElement.border  = 0;
-  imgElement.src     = photo.thumbnail.dataUrl;
-  imgElement.width   = photo.thumbnail.width;
-  imgElement.height  = photo.thumbnail.height;
-  imgElement.onclick = event => console.log(dateTimeUtility.getDateTime(photo.path));
-
-  return photo.thumbnail === null
-    ? document.createTextNode('Thumbnail is not available.')
-    : imgElement;
 }
