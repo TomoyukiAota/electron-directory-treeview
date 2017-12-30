@@ -11,21 +11,26 @@ body {
 }
 
 #side-bar {
+  margin: 5px;
   min-width: 20rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 #splitter{
-  background-color: black;
+  background-color: darkgray;
   top: 0;
   float: left;
-  width: 0.5rem;
+  width: 3px;
   margin: 0px;
   cursor: col-resize;
 }
 
 #content {
-  padding: 1rem;
   width: 100%;
-  overflow: scroll;
+  overflow: hidden;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
 }
