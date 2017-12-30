@@ -19,29 +19,24 @@ exports.correctRotation = function (dataUrl, orientation) {
     const img = new Image();
 
     img.onload = function () {
-      const width = img.width;
-      const height = img.height;
+      const srcWidth = img.width;
+      const srcHeight = img.height;
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
 
-      // set canvas dimensions according to the specified orientation
-      if (4 < orientation && orientation < 9) {
-        canvas.width = height;
-        canvas.height = width;
-      } else {
-        canvas.width = width;
-        canvas.height = height;
-      }
+      const rotatedSize = exports.getRotatedSize(srcWidth, srcHeight, orientation);
+      canvas.width = rotatedSize.width;
+      canvas.height = rotatedSize.height;
 
       // transform context according to the specified orientation
       switch (orientation) {
-        case 2: ctx.transform(-1, 0, 0, 1, width, 0); break;
-        case 3: ctx.transform(-1, 0, 0, -1, width, height); break;
-        case 4: ctx.transform(1, 0, 0, -1, 0, height); break;
+        case 2: ctx.transform(-1, 0, 0, 1, srcWidth, 0); break;
+        case 3: ctx.transform(-1, 0, 0, -1, srcWidth, srcHeight); break;
+        case 4: ctx.transform(1, 0, 0, -1, 0, srcHeight); break;
         case 5: ctx.transform(0, 1, 1, 0, 0, 0); break;
-        case 6: ctx.transform(0, 1, -1, 0, height, 0); break;
-        case 7: ctx.transform(0, -1, -1, 0, height, width); break;
-        case 8: ctx.transform(0, -1, 1, 0, 0, width); break;
+        case 6: ctx.transform(0, 1, -1, 0, srcHeight, 0); break;
+        case 7: ctx.transform(0, -1, -1, 0, srcHeight, srcWidth); break;
+        case 8: ctx.transform(0, -1, 1, 0, 0, srcWidth); break;
         default: break;
       }
 
@@ -55,4 +50,25 @@ exports.correctRotation = function (dataUrl, orientation) {
 
     img.src = dataUrl;
   });
+};
+
+/**
+ * Get rotated width and height using EXIF orientation.
+ * @param {number} srcWidth width to rotate
+ * @param {number} srcHeight height to rotate
+ * @param {number} orientation EXIF orientation
+ */
+exports.getRotatedSize = function (srcWidth, srcHeight, orientation) {
+  let dstWidth, dstHeight;
+  if (4 < orientation && orientation < 9) {
+    dstWidth = srcHeight;
+    dstHeight = srcWidth;
+  } else {
+    dstWidth = srcWidth;
+    dstHeight = srcHeight;
+  }
+  return {
+    width: dstWidth,
+    height: dstHeight
+  };
 };

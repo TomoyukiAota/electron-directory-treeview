@@ -1,6 +1,4 @@
-const BrowserWindow = require('electron').remote.BrowserWindow; // eslint-disable-line import/no-extraneous-dependencies
-const pathModule = require('path');
-const urlModule = require('url');
+const photoViewerLauncher = require('./photo-viewer-launcher');
 
 /**
  * Generates the content of info window displayed when a marker is clicked in Google Maps.
@@ -19,23 +17,6 @@ exports.generate = function (photo) {
   return root;
 };
 
-function showPhotoViewer(photo) {
-  const photoViewerUrl = urlModule.format({
-    pathname: pathModule.join(__dirname, './photo-viewer/photo-viewer.html'),
-    protocol: 'file:',
-    slashes: true,
-    query: { photo: encodeURIComponent(JSON.stringify(photo)) }
-  });
-  let browerWindow = new BrowserWindow({
-    width: 1000,
-    height: 1000,
-    title: photo.name
-  });
-  browerWindow.on('close', function () { browerWindow = null; });
-  browerWindow.loadURL(photoViewerUrl);
-  browerWindow.show();
-}
-
 function createThumbnailElement(photo) {
   if (photo.thumbnail === null) {
     return document.createTextNode('Thumbnail is not available.');
@@ -46,7 +27,7 @@ function createThumbnailElement(photo) {
   thumbnailElement.src     = photo.thumbnail.dataUrl;
   thumbnailElement.width   = photo.thumbnail.width;
   thumbnailElement.height  = photo.thumbnail.height;
-  thumbnailElement.onclick = event => showPhotoViewer(photo);
+  thumbnailElement.onclick = event => photoViewerLauncher.launch(photo);
   return thumbnailElement;
 }
 
