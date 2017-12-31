@@ -18,8 +18,8 @@ let mainWindow;
 function createWindow() {
   // Load the previous state with fallback to defaults
   const mainWindowState = electronWindowState({
-    defaultWidth: 1000,
-    defaultHeight: 800
+    defaultWidth: 800,
+    defaultHeight: 600
   });
 
   // Create the window using the state information
