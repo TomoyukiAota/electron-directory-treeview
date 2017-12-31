@@ -1,6 +1,6 @@
 const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
-const path = require('path');
-const url = require('url');
+const pathModule = require('path');
+const urlModule = require('url');
 
 // Module to control application life.
 const app = electron.app;
@@ -19,8 +19,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
   // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'view/index.html'),
+  mainWindow.loadURL(urlModule.format({
+    pathname: pathModule.join(__dirname, 'view/index.html'),
     protocol: 'file:',
     slashes: true
   }));
