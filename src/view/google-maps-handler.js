@@ -54,7 +54,7 @@ function renderInitialState() {
   new google.maps.Map(document.getElementById('map'), {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     center: { lat: 0.0, lng: 0.0 },
-    zoom: 0
+    zoom: 2
   });
 }
 
