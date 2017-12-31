@@ -1,5 +1,5 @@
 const exifManager = require('../model/exif-manager');
-const dateTimeUtility = require('../model/date-time-utility');
+const photoDateTakenGenerator = require('../model/photo-date-taken-generator');
 
 /**
  * Generates information related to the photo specified by the path.
@@ -14,6 +14,6 @@ exports.generate = async function (name, path) {
     latitude: gpsCoordinates.latitude,
     longitude: gpsCoordinates.longitude,
     thumbnail: await exifManager.getThumbnail(path),
-    dateTime: dateTimeUtility.getDateTime(path)
+    dateTime: photoDateTakenGenerator.generate(path)
   };
 };

@@ -3,11 +3,11 @@ const moment = require('moment-timezone');
 const exifManager = require('./exif-manager');
 
 /**
- * Gets date and time when the photo was taken from the specified path.
+ * Generates date and time when the photo was taken from the specified path.
  * If they do not exist or exist in incorrect format, null is returned.
  * @param {string} path file path
  */
-exports.getDateTime = function (path) {
+exports.generate = function (path) {
   // No support for time zone using GPSDateStamp and GPSTimeStamp.
   // This is because GPSDateStamp does not exist in old cameras like iPhone 4 and 5,
   // so a large number of photos cannot support time zone.
