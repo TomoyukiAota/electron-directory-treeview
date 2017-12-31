@@ -30,7 +30,7 @@ exports.launch = async function (photoInfo) {
     height: Math.floor(shrinkedSize.height),
     latitude: photoInfo.latitude,
     longitude: photoInfo.longitude,
-    dateTime: photoInfo.dateTime
+    dateTaken: photoInfo.dateTaken
   };
 
   const encodedPhoto = encodeURIComponent(JSON.stringify(photo));

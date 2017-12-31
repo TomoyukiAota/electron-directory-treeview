@@ -14,6 +14,6 @@ exports.generate = async function (name, path) {
     latitude: gpsCoordinates.latitude,
     longitude: gpsCoordinates.longitude,
     thumbnail: await exifManager.getThumbnail(path),
-    dateTime: photoDateTakenGenerator.generate(path)
+    dateTaken: photoDateTakenGenerator.generate(path)
   };
 };

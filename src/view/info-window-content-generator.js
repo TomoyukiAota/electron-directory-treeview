@@ -9,9 +9,9 @@ exports.generate = function (photo) {
 
   const thumbnailElement = createThumbnailElement(photo);
   const nameElement = createNameElement(photo);
-  const dateTimeElement = createDateTimeElement(photo);
+  const dateTakenElement = createDateTakenElement(photo);
 
-  [thumbnailElement, nameElement, dateTimeElement]
+  [thumbnailElement, nameElement, dateTakenElement]
     .forEach(element => root.appendChild(element));
 
   return root;
@@ -39,11 +39,11 @@ function createNameElement(photo) {
   return nameElement;
 }
 
-function createDateTimeElement(photo) {
-  const dateTime = photo.dateTime || 'Date taken is not available.';
-  const dateTimeElement = document.createElement('div');
-  dateTimeElement.style.textAlign  = 'center';
-  dateTimeElement.style.fontWeight = 'bold';
-  dateTimeElement.innerText        = dateTime;
-  return dateTimeElement;
+function createDateTakenElement(photo) {
+  const dateTaken = photo.dateTaken || 'Date taken is not available.';
+  const dateTakenElement = document.createElement('div');
+  dateTakenElement.style.textAlign  = 'center';
+  dateTakenElement.style.fontWeight = 'bold';
+  dateTakenElement.innerText        = dateTaken;
+  return dateTakenElement;
 }
