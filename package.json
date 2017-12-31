@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "directory-tree": "2.0.0",
+    "electron-window-state": "4.1.1",
     "exif-parser": "0.1.12",
     "jquery": "3.2.1",
     "jstree": "3.3.4",

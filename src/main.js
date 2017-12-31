@@ -1,6 +1,7 @@
 const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
 const pathModule = require('path');
 const urlModule = require('url');
+const electronWindowState = require('electron-window-state');
 
 // Module to control application life.
 const app = electron.app;
@@ -15,20 +16,33 @@ const dialog = electron.dialog;
 let mainWindow;
 
 function createWindow() {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  // Load the previous state with fallback to defaults
+  const mainWindowState = electronWindowState({
+    defaultWidth: 1000,
+    defaultHeight: 800
+  });
 
-  // and load the index.html of the app.
+  // Create the window using the state information
+  mainWindow = new BrowserWindow({
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height
+  });
+
+  // Let us register listeners on the window, so we can update the state
+  // automatically (the listeners will be removed when the window is closed)
+  // and restore the maximized or full screen state
+  mainWindowState.manage(mainWindow);
+
+  mainWindow.webContents.openDevTools();
+
   mainWindow.loadURL(urlModule.format({
     pathname: pathModule.join(__dirname, 'view/index.html'),
     protocol: 'file:',
     slashes: true
   }));
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
-
-  // Emitted when the window is closed.
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
@@ -66,6 +80,3 @@ ipc.on('open-file-dialog', function (event) {
     if (files) event.sender.send('selected-directory', files);
   });
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
