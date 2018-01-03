@@ -2,7 +2,7 @@
   "name": "electron-directory-treeview",
   "version": "1.0.0",
   "description": "Experiment with electron about a tree view of directories.",
-  "main": "src/main.js",
+  "main": "src/main/main.js",
   "scripts": {
     "start": "electron .",
     "lint": "eslint"
