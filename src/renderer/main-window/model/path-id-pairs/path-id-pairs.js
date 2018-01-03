@@ -56,7 +56,7 @@ exports.getId = function (path) {
 /**
  * Get the path from the specified ID.
  * @param {string} id ID
- * @return {string} If the ID is an issue one, returns the path. If not, returns null.
+ * @return {string} If the ID is an issued one, returns the path. If not, returns null.
  */
 exports.getPath = function (id) {
   const elements = pairs.filter(element => element.id === id);
