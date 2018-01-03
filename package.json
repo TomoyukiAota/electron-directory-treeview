@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint",
     "start": "electron .",
-    "unit-test": "mocha test"
+    "unit-test": "mocha --require intelli-espower-loader test"
   },
   "repository": "https://github.com/TomoyukiAota/electron-directory-treeview",
   "author": "TomoyukiAota",
@@ -16,7 +16,9 @@
     "eslint": "4.13.0",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-plugin-import": "2.8.0",
-    "mocha": "4.1.0"
+    "intelli-espower-loader": "1.0.1",
+    "mocha": "4.1.0",
+    "power-assert": "1.4.4"
   },
   "dependencies": {
     "directory-tree": "2.0.0",
