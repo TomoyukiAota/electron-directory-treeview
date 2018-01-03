@@ -3,7 +3,7 @@ const pathModule = require('path');
 const urlModule = require('url');
 
 const exifManager = require('../model/exif-manager');
-const imageUtility = require('../../../shared/image-utility');
+const imageUtility = require('../../shared/image-utility');
 
 /**
  * Launches a photo viewer for the specified photo.
