@@ -38,7 +38,7 @@ function createMainWindow() {
   mainWindow.webContents.openDevTools();
 
   mainWindow.loadURL(urlModule.format({
-    pathname: pathModule.join(__dirname, '../renderer/view/index.html'),
+    pathname: pathModule.join(__dirname, '../renderer/main-window/view/index.html'),
     protocol: 'file:',
     slashes: true
   }));

@@ -37,7 +37,7 @@ exports.launch = async function (photoInfo) {
   console.log(`Length of query component of URL for ${photo.name} window: ${encodedPhoto.length}`);
 
   const photoViewerUrl = urlModule.format({
-    pathname: pathModule.join(__dirname, './photo-viewer/photo-viewer.html'),
+    pathname: pathModule.join(__dirname, '../../photo-viewer/photo-viewer.html'),
     protocol: 'file:',
     slashes: true,
     query: { photo: encodedPhoto }

@@ -1,6 +1,6 @@
 const urlModule = require('url');
 
-const imageUtility = require('../../model/image-utility');
+const imageUtility = require('../main-window/model/image-utility');
 
 const query = urlModule.parse(window.location.href, true).query;
 const photo = JSON.parse(decodeURIComponent(query.photo));
