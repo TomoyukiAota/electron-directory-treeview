@@ -17,5 +17,10 @@ npm install
 npm start
 ```
 
-## Reference
- - [electron-quick-start](https://github.com/electron/electron-quick-start): Started experiment based on the files in this repository.
+## Useful VS Code Extensions
+
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Git Lens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
+- [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+- [Mocha sidebar](https://marketplace.visualstudio.com/items?itemName=maty.vscode-mocha-sidebar)
+- [npm Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
