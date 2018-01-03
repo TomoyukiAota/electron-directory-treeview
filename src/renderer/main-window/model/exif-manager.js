@@ -3,7 +3,7 @@ const exifParser = require('exif-parser');
 const _ = require('lodash');
 const moment = require('moment-timezone');
 
-const imageUtility = require('./image-utility');
+const imageUtility = require('../../../shared/image-utility');
 
 const exifPromises = [];
 const pathExifPairs = [];
