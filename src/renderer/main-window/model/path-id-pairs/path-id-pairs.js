@@ -6,6 +6,21 @@ function issueId() {
 }
 
 /**
+ * Clear all registered pairs. After this function call, ID will be issued from 0 again.
+ */
+exports.reset = function () {
+  pairs = [];
+  id = 0;
+};
+
+/**
+ * Returns path-ID pairs.
+ */
+exports.getPairs = function () {
+  return pairs;
+};
+
+/**
  * Register path. A unique ID will be generated and paired with the path.
  * @param {string} path path to register
  * @returns {boolean} false if the path is already registered.
@@ -20,14 +35,6 @@ exports.registerPath = function (path) {
   };
   pairs.push(newElement);
   return true;
-};
-
-/**
- * Clear all registered pairs. After this function call, ID will be issued from 0 again.
- */
-exports.reset = function () {
-  pairs = [];
-  id = 0;
 };
 
 /**
@@ -49,7 +56,7 @@ exports.getId = function (path) {
 /**
  * Get the path from the specified ID.
  * @param {string} id ID
- * @return {string} If the ID is registered, returns the path. If not, returns null.
+ * @return {string} If the ID is an issue one, returns the path. If not, returns null.
  */
 exports.getPath = function (id) {
   const elements = pairs.filter(element => element.id === id);
