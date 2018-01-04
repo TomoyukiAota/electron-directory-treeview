@@ -26,6 +26,13 @@
       "type": "npm",
       "script": "unit-test",
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "watch",
+      "problemMatcher": [
+        "$eslint-stylish"
+      ]
     }
   ]
 }
