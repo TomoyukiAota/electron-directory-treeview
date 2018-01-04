@@ -71,4 +71,10 @@ describe('path-id-pairs', function () {
       assert(pathIdPairs.getPath('1') === null);
     });
   });
+
+  describe('document test', function () {
+    it('should do something', function () {
+      document.createElement('div');
+    });
+  });
 });
