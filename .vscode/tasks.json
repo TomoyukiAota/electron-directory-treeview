@@ -15,6 +15,13 @@
     },
     {
       "type": "npm",
+      "script": "test",
+      "problemMatcher": [
+        "$eslint-stylish"
+      ]
+    },
+    {
+      "type": "npm",
       "script": "lint",
       "problemMatcher": [
         "$eslint-stylish"
