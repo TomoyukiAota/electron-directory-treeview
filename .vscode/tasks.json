@@ -5,8 +5,10 @@
   "tasks": [
     {
       "type": "npm",
-      "script": "unit-test",
-      "problemMatcher": []
+      "script": "lint",
+      "problemMatcher": [
+        "$eslint-stylish"
+      ]
     },
     {
       "type": "npm",
@@ -22,10 +24,8 @@
     },
     {
       "type": "npm",
-      "script": "lint",
-      "problemMatcher": [
-        "$eslint-stylish"
-      ]
+      "script": "unit-test",
+      "problemMatcher": []
     }
   ]
 }
