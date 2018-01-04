@@ -4,7 +4,7 @@
   "description": "Experiment with electron about a tree view of directories.",
   "main": "src/main/main.js",
   "scripts": {
-    "lint": "eslint",
+    "lint": "eslint .",
     "start": "electron .",
     "test": "npm run unit-test",
     "unit-test": "electron-mocha --require intelli-espower-loader --recursive --renderer ./test"
