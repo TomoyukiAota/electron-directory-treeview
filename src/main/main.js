@@ -24,6 +24,7 @@ function createMainWindow() {
 
   // Create the window using the state information
   mainWindow = new BrowserWindow({
+    title: 'Photo Location Map',
     x: mainWindowState.x,
     y: mainWindowState.y,
     width: mainWindowState.width,

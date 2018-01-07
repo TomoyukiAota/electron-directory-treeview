@@ -1,26 +1,26 @@
-# electron-directory-treeview
+# Photo Location Map
 
-Experiment with electron about a tree view of directories.
+Display the locations where your photos are taken in Google Maps.
 
-## To Use
+## How To Run
 
-To clone and run this repository, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+The following applications are required to be installed on your computer.
+
+- [Git](https://git-scm.com)
+- [Node.js](https://nodejs.org/en/) (v8.9.0 LTS or greater)
+
+To run this application, type the following commands:
 
 ```bash
-# Clone this repository
-git clone https://github.com/TomoyukiAota/electron-directory-treeview
-# Go into the repository
-cd electron-directory-treeview
-# Install dependencies
+git clone https://github.com/TomoyukiAota/photo-location-map
+cd photo-location-map
 npm install
-# Run the app
 npm start
 ```
 
-## Useful VS Code Extensions
+## Useful VS Code Extensions For Development
 
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 - [Git Lens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 - [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
-- [Mocha sidebar](https://marketplace.visualstudio.com/items?itemName=maty.vscode-mocha-sidebar)
 - [npm Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
