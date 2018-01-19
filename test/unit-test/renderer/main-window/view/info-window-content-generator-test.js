@@ -1,6 +1,7 @@
 const assert = require('assert');
 
-const infoWindowContentGenerator = require('../../../../src/renderer/main-window/view/info-window-content-generator');
+const infoWindowContentGenerator
+  = require('../../../../../src/renderer/main-window/view/info-window-content-generator');
 
 describe('info-window-content-generator', function () {
   describe('createNameElement(photo)', function () {

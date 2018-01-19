@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-const pathIdPairs = require('../../../../../src/renderer/main-window/model/path-id-pairs/path-id-pairs');
+const pathIdPairs = require('../../../../../../src/renderer/main-window/model/path-id-pairs/path-id-pairs');
 
 describe('path-id-pairs', function () {
   beforeEach('reset before each test', function () {
