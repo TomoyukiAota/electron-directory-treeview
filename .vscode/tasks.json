@@ -29,6 +29,11 @@
     },
     {
       "type": "npm",
+      "script": "e2e-test",
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
       "script": "watch",
       "problemMatcher": [
         "$eslint-stylish"
