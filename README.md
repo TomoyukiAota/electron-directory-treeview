@@ -1,6 +1,9 @@
-# Photo Location Map
+# Photo Location Map (Old)
 
-Display the locations where your photos are taken in Google Maps.
+Display the locations where your photos are taken on Google Maps.
+
+[Photo Location Map](https://github.com/TomoyukiAota/photo-location-map) will be the replacement of this work. This work is to see the feasibility of application functionalities, which is already done.
+
 
 ## How To Run
 
@@ -17,10 +20,3 @@ cd photo-location-map
 npm install
 npm start
 ```
-
-## Useful VS Code Extensions For Development
-
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Git Lens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
-- [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
-- [npm Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
