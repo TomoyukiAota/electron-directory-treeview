@@ -15,8 +15,8 @@ The following applications are required to be installed on your computer.
 To run this application, type the following commands:
 
 ```bash
-git clone https://github.com/TomoyukiAota/photo-location-map
-cd photo-location-map
+git clone https://github.com/TomoyukiAota/photo-location-map-old
+cd photo-location-map-old
 npm install
 npm start
 ```
