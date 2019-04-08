@@ -9,6 +9,7 @@
         "curly": "off",
         "func-names": "off",
         "function-paren-newline": "off",
+        "linebreak-style": 0,
         "max-len": ["error", { "code": 120, "ignoreTrailingComments": true }],
         "no-cond-assign": ["error", "except-parens"],
         "no-multi-spaces": "off",
